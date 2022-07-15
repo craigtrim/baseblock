@@ -37,21 +37,35 @@ class FileIO(object):
 
     @staticmethod
     def join(*args) -> str:
-        return os.path.normpath(os.path.join(args))
+        return os.path.normpath(os.path.join(*args))
 
     @staticmethod
-    def temp(data: object) -> None:
-        path = FileIO.join(FileIO.local_directory(), "temp.json")
+    def temp(data: object) -> str:
+        """ Write a Data Object to a Temp File
+
+        Args:
+            data (object): any data object
+
+        Raises:
+            NotImplementedError: unrecognized data type
+            ValueError: unrecognized data type
+
+        Returns:
+            str: the path the file was written to
+        """
 
         _type = type(data)
-        if _type in [dict, list]:
-            FileIO.write_json(data, path)
-        elif _type in [str]:
-            FileIO.write_string(data, path)
-        else:
+        if _type not in [dict, list, str]:
             raise NotImplementedError(_type)
 
-        raise ValueError(f"Wrote File to Path: {path}")
+        path = FileIO.join(FileIO.local_directory(), "temp.json")
+        if _type == str:
+            FileIO.write_string(data, path)
+        else:
+            FileIO.write_json(data, path)
+
+        print(f"Wrote File to {path}")
+        return path
 
     @staticmethod
     def exists(file_path: str) -> bool:
