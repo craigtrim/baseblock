@@ -13,6 +13,12 @@ def test_temp():
     assert not os.path.exists(path)
 
 
+def test_local_directory_by_name():
+    path = FileIO.local_directory_by_name('BastAI-Temp')
+    assert os.path.exists(path)
+    os.rmdir(path)
+    assert not os.path.exists(path)
+
 def main():
     test_temp()
 

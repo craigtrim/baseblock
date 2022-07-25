@@ -25,7 +25,7 @@ class FileIO(object):
             NotImplementedError: Platform O/S Not Recognized
 
         Returns:
-            str: Path to a Local Directory
+            str: absolute Path to a Local Directory
         """
         if platform == "linux" or platform == "linux2":
             return os.environ['HOME']
@@ -34,6 +34,20 @@ class FileIO(object):
         elif platform == "win32":
             return os.environ['APPDATA']
         raise NotImplementedError(platform)
+    
+    @staticmethod
+    def local_directory_by_name(folder_name: str) -> str:
+        """ Create a Local Directory under a Platform Specific Directory
+
+        Args:
+            folder_name (str): the local directory to create
+
+        Returns:
+            str: absolute Path to Local Directory
+        """
+        local_path = FileIO.join(FileIO.local_directory(), folder_name)
+        FileIO.exists_or_create(local_path)
+        return local_path
 
     @staticmethod
     def join(*args) -> str:

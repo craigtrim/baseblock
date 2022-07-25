@@ -91,7 +91,7 @@ class TextUtils(object):
 
     @staticmethod
     def split_on_len(input_text: str,
-                     threshold: int = 7) -> str:
+                     threshold: int = 7) -> str or None:
         """Insert New Lines into Label Text
         This constrains the text to fit into a small box on a diagram
 
@@ -100,8 +100,11 @@ class TextUtils(object):
             threshold (int, optional): The relative position to set a line break. Defaults to 7.
 
         Returns:
-            str: the input text with zero-or-more line breaks inserted
+            str or None: the input text with zero-or-more line breaks inserted
+                only return None if the input is None
         """
+        if input_text is None:
+            return None
 
         if len(input_text) <= threshold:
             return input_text
