@@ -4,6 +4,7 @@
 
 
 from cryptography.fernet import Fernet
+from cryptography.fernet import InvalidToken
 
 enc = "utf-8"
 
@@ -22,21 +23,62 @@ class CryptoBase(object):
 
     def encrypt_str(self,
                     some_input: str) -> str:
+        """ Encrypt a String
+
+        Args:
+            some_input (str): any input string
+
+        Returns:
+            str: the encrypted string
+        """
         return self.encrypt(some_input.encode(enc))
 
     def encrypt(self,
                 message: bytes) -> str:
+        """ Encrypt Bytes
+
+        Args:
+            message (bytes): any input bytes
+
+        Returns:
+            str: the encrypted string
+        """
         f = Fernet(self._key)
         return str(f.encrypt(message))
 
     def decrypt_str(self,
-                    some_input: str) -> str:
+                    some_input: str) -> str or None:
+        """ Decrypt a String
+
+        Args:
+            some_input (str): any input string
+
+        Raises:
+            ValueError: the encrypted token is invalid
+
+        Returns:
+            str or None: the decrypted string if the encrypted token is valid
+        """
         return self.decrypt(some_input.encode(enc))
 
     def decrypt(self,
                 message: bytes) -> str:
-        f = Fernet(self._key)
-        return f.decrypt(message).decode(enc)
+        """ Decrypt Bytes
+
+        Args:
+            message (bytes): any input bytes
+
+        Raises:
+            ValueError: the encrypted token is invalid
+
+        Returns:
+            str: the decrypted string
+        """
+        try:
+            f = Fernet(self._key)
+            return f.decrypt(message).decode(enc)
+        except InvalidToken as e:
+            raise ValueError('Invalid Token')
 
 
 def main(param1, param2):

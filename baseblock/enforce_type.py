@@ -92,6 +92,28 @@ class Enforcer(object):
             cls.is_str(value, display=display)
 
     @classmethod
+    def is_int_or_float(cls,
+                        value: object,
+                        display: bool = False) -> None:
+        """ Check if the incoming value is an Int or Float 
+
+        Args:
+            value (object): the incoming value
+            display (bool, optional): if True, display the value. Defaults to False.
+
+        Raises:
+            DataTypeNotExpectedError: the incoming value was neither an int nor a float
+        """
+        _type = type(value)
+        if _type == int or _type == float:
+            if display:
+                print(value)
+            return None
+
+        raise DataTypeNotExpectedError(actual_value=value,
+                                       expected_type='int or float')
+
+    @classmethod
     def is_int(cls,
                value: object,
                display: bool = False) -> None:
