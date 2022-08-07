@@ -5,6 +5,8 @@
 
 import os
 import io
+from io import StringIO
+
 import json
 import codecs
 
@@ -34,7 +36,7 @@ class FileIO(object):
         elif platform == "win32":
             return os.environ['APPDATA']
         raise NotImplementedError(platform)
-    
+
     @staticmethod
     def local_directory_by_name(folder_name: str) -> str:
         """ Create a Local Directory under a Platform Specific Directory
@@ -48,6 +50,31 @@ class FileIO(object):
         local_path = FileIO.join(FileIO.local_directory(), folder_name)
         FileIO.exists_or_create(local_path)
         return local_path
+
+    @staticmethod
+    def normpath(path: str) -> str:
+        """ Normalize Path to use forward slashes
+
+        This differs from 
+            os.path.normpath
+        in that the Python std lib call will normalize on a platform-specific basis
+
+        This means a path like this
+            alpha/bravo/charlie
+        will become
+            alpha\\bravo\\charlie
+        on a Windows platform; which is silly, because forward slashes work just fine on Windows
+
+        Args:
+            path (str): the incoming path
+
+        Returns:
+            str: the outgoing path
+        """
+        if '\\' in path:
+            path = path.replace('\\', '/')
+            os.path.normpath
+        return path
 
     @staticmethod
     def join(*args) -> str:
@@ -333,8 +360,6 @@ class FileIO(object):
             list: list of files
         """
         def non_recursive_loader() -> list:
-            input_files = []
-
             files = os.listdir(directory)
 
             files = [f for f in files if f.endswith(extension)]
@@ -377,3 +402,46 @@ class FileIO(object):
             return True
 
         return [x for x in load_files() if is_valid(x)]
+
+    @staticmethod
+    def parse_yaml(file_data: str) -> dict:
+        """Read YAML from String
+
+        Args:
+            file_data (str): the string-ified YAML data
+
+        Raises:
+            ValueError: the file data is not valid YAML
+
+        Returns:
+            dict: a py YAML dictionary
+        """
+        try:
+            return yaml.load(StringIO(file_data), Loader)
+        except yaml.YAMLError:
+            raise ValueError(f"Invalid YAML Data")
+
+    @staticmethod
+    def parse_json(file_data: str) -> dict:
+        """Read JSON from String
+
+        Args:
+            file_data (str): the string-ified JSON data
+
+        Raises:
+            ValueError: the file data is not valid JSON
+
+        Returns:
+            dict: a py JSON dictionary
+        """
+        try:
+            file_data_type = type(file_data)
+            if file_data_type == dict:
+                return dict(file_data)
+            if file_data_type == list:
+                return list(file_data)
+
+            return json.loads(file_data)
+
+        except json.decoder.JSONDecodeError:
+            raise ValueError(f"Invalid JSON Data")
