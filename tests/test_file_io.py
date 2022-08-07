@@ -42,7 +42,7 @@ def test_parse_yaml():
 
 
 def test_join():
-    assert FileIO.join('alpha/beta', 'gamma/delta', 'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\F\digamma"""
+    assert FileIO.join('alpha/beta', 'gamma/delta', 'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
 
 
 if __name__ == "__main__":

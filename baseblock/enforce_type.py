@@ -438,3 +438,12 @@ class Enforcer(object):
         if value is not None:
             raise ContentNotExpectedError(actual_value=value,
                                           expected_type='None')
+
+    @classmethod
+    def is_json(cls,
+                value: object) -> None:
+        if Enforcer.is_dict(value=value, display=False):
+            return True
+        if Enforcer.is_list(value=value, display=False):
+            return True
+        return False

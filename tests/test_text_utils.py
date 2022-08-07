@@ -48,13 +48,3 @@ def test_update_determiners():
     assert TextUtils.update_determiners(
         "A incredible contributor") == "An incredible contributor"
 
-
-def main():
-    test_title_case()
-    # test_sentence_case()
-    # test_lower_case()
-    # test_update_determiners()
-
-
-if __name__ == "__main__":
-    main()
