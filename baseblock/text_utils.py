@@ -26,6 +26,60 @@ STOPWORDS = [
 class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
+    @staticmethod
+    def find_subsumed_tokens(tokens: list) -> list:
+        """ Find Subsumed Tokens (if any)
+
+        Version:
+            >= 0.1.6
+
+        For Example:
+            '1 pm' contains 'pm' thus '1 pm' subsumes (asorbs) 'pm'
+
+        Reference:
+            https://github.com/craigtrim/baseblock/issues/3
+
+        Args:
+            tokens (list): the incoming tokens
+            Sample Input:
+                ['tomorrow', 'meeting', '1 pm', 'pm']
+
+        Returns:
+            list: the subsumed tokens (if any)
+            Sample Output:
+                ['pm']
+        """
+
+        def exists(item_1: str, item_2: str) -> bool:
+            token_lr = f" {item_1} "
+            if token_lr in item_2:
+                return True
+
+            token_l = f" {item_1}"
+            if item_2.endswith(token_l):
+                return True
+
+            token_r = f"{item_1} "
+            if item_2.startswith(token_r):
+                return True
+
+            return False
+
+        pairs = []
+        for i1 in tokens:
+            for i2 in [x for x in tokens if i1 != x]:
+                pairs.append(sorted({i1, i2}, key=len, reverse=False))
+
+        excludes = set()
+        for pair in pairs:
+            if exists(pair[0], pair[1]):
+                excludes.add(pair[0])
+
+        if not len(excludes):
+            return []
+
+        return sorted(excludes)
+
     def choose_random_line(input_text: str) -> str:
         """ Choose Random Line from Long Input String
 

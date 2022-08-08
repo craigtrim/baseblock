@@ -48,3 +48,10 @@ def test_update_determiners():
     assert TextUtils.update_determiners(
         "A incredible contributor") == "An incredible contributor"
 
+
+def test_subsumes():
+
+    results = TextUtils.find_subsumed_tokens(
+        ['alpha beta gamma', 'beta gamma', 'gamma'])
+
+    assert results == ['beta gamma', 'gamma']
