@@ -60,4 +60,4 @@ _modules
 poetry.lock
 config.ps1
 ~$emojis.xlsx
-Publish-to-PyPI.ps1
+publish_to_pypi.ps1
