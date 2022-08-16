@@ -267,7 +267,7 @@ class Enforcer(object):
             ContentNotExpectedError: the actual keys do not match the expected keys
         """
         cls.is_dict(d)
-        args = list(args)
+        args = sorted(args)
         keys = sorted(d.keys())
         if keys != args:
             raise ContentNotExpectedError(actual_content=keys,
