@@ -31,7 +31,13 @@ class CryptoBase(object):
         Returns:
             str: the encrypted string
         """
-        return self.encrypt(some_input.encode(enc))
+        result = str(self.encrypt(some_input.encode(enc)))
+
+        # eliminate the 'bytes' prefix and suffix markers
+        if result.startswith("b'") and result.endswith("'"):
+            return result[2:-1]
+
+        return result
 
     def encrypt(self,
                 message: bytes) -> str:

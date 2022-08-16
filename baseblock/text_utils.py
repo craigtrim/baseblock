@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 """ Text Utility Methods: Common Functions without Special Libraries """
 
+
+from os import sep
 from statistics import mean
 
 STOPWORDS = [
@@ -178,7 +180,7 @@ class TextUtils(object):
         if len(buffer):
             master.append(' '.join(buffer).strip())
 
-        return "\\n".join(master).strip()
+        return sep.join(master).strip()
 
     @staticmethod
     def ends_with_punctuation(input_text: str) -> bool:
