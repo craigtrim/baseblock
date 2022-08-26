@@ -55,6 +55,7 @@ class TextMatcher(object):
             old_value (str): the value that must exist in the input text
             new_value (str): the value that will replace 'old value' within the input text
             case_sensitive (bool): True if case sensitivity matters
+            recursive (bool): if True, then apply method recursively until all changes are made
 
         Returns:
             bool: True if the value exists in the input text
@@ -89,3 +90,41 @@ class TextMatcher(object):
                 case_sensitive=case_sensitive)
 
         return input_text
+
+    @staticmethod
+    def coords(value: str,
+               input_text: str,
+               case_sensitive: bool = False) -> bool:
+        """ Find the X,Y coords (if any) for a given value in the supplied input text
+
+        Args:
+            input_text (str): any text string to search in
+            value (str): the value to find coords for
+            case_sensitive (bool): True if case sensitivity matters
+
+        Returns:
+            bool: True if the value exists in the input text
+        """
+
+        if not case_sensitive:
+            value = value.lower()
+            input_text = input_text.lower()
+
+        if value == input_text:
+            return 0, len(value)
+
+        match_lr = f" {value} "
+        if match_lr in input_text:
+            x = input_text.index(match_lr)
+            return x + 1, x + len(value) + 1
+
+        match_l = f" {value}"
+        if input_text.endswith(match_l):
+            return len(input_text) - len(value), len(input_text)
+
+        match_r = f"{value} "
+        if input_text.startswith(match_r):
+            return 0, len(value)
+
+        # not found
+        return None, None

@@ -37,9 +37,32 @@ def test_replace():
                       case_sensitive=False) == "the entity_fox and the entity_fox together outfoxed every foxy entity_fox that foxed foxily"
 
 
+def test_coords():
+
+    tm = TextMatcher
+    assert tm
+
+    x, y = tm.coords(input_text=input_text_1,
+                     value='quick')
+    print(f"X,Y: {x},{y}: ({input_text_1[x:y]})")
+    assert input_text_1[x:y] == 'quick'
+
+    x, y = tm.coords(input_text=input_text_1,
+                     value='the')
+    print(f"X,Y: {x},{y}: ({input_text_1[x:y]})")
+    assert input_text_1[x:y] == 'the'
+
+    x, y = tm.coords(input_text=input_text_1,
+                     value='the ')
+    print(f"X,Y: {x},{y}: ({input_text_1[x:y]})")
+    assert input_text_1[x:y] == 'the '
+
+
+
 def main():
     test_exists()
     test_replace()
+    test_coords()
 
 
 if __name__ == "__main__":
