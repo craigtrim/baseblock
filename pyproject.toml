@@ -2,7 +2,7 @@
 authors = ["Craig Trim <craigtrim@gmail.com>"]
 description = "Base Block of Common Enterprise Python Utilities"
 name = "baseblock"
-version = "0.1.14"
+version = "0.1.15"
 
 [tool.poetry.dependencies]
 PyYAML = "6.0"
