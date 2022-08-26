@@ -5,7 +5,7 @@
 
 from os import sep
 from statistics import mean
-from unicodedata import category
+from unicodedata2 import category
 
 STOPWORDS = [
     'a',
@@ -30,19 +30,55 @@ class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
     @staticmethod
-    def is_punctuation(char):
-        """Checks whether `char` is a punctuation character."""
+    def is_punctuation(char: str) -> bool:
+        """ Checks whether `char` is a punctuation character.
+
+        Args:
+            char (str): any incoming character
+                if the length of the parameter exceeds 1, this method will return False immediately
+
+        Returns:
+            bool: True if the character is punctuation
+        """
+
+        # not testing if 'has_punctuation'
+        if len(char) > 1:
+            return False
+
         cp = ord(char)
+
         # We treat all non-letter/number ASCII as punctuation.
         # Characters such as "^", "$", and "`" are not in the Unicode
-        # Punctuation class but we treat them as punctuation anyways, for
-        # consistency.
+        # Punctuation class but we treat them as punctuation anyways, for consistency.
         if (cp >= 33 and cp <= 47) or (cp >= 58 and cp <= 64) or (cp >= 91 and cp <= 96) or (cp >= 123 and cp <= 126):
             return True
+
         cat = category(char)
         if cat.startswith("P"):
             return True
+
         return False
+
+    @staticmethod
+    def has_punctuation(input_text: str):
+        """Checks whether the input text has any punctuation characters."""
+
+        for ch in input_text:
+            if TextUtils.is_punctuation(ch):
+                return True
+
+        return False
+
+    @staticmethod
+    def remove_punctuation(input_text: str):
+        """Checks whether the input text has any punctuation characters."""
+
+        buffer = []
+        for ch in input_text:
+            if not TextUtils.is_punctuation(ch):
+                buffer.append(ch)
+
+        return ''.join(buffer)
 
     @staticmethod
     def find_subsumed_tokens(tokens: list) -> list:
