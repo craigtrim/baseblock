@@ -46,7 +46,8 @@ class TextMatcher(object):
     def replace(input_text: str,
                 old_value: str,
                 new_value: str,
-                case_sensitive: bool = False) -> bool:
+                case_sensitive: bool = False,
+                recursive: bool = False) -> bool:
         """ Check for the existence of a value in input text
 
         Args:
@@ -80,7 +81,7 @@ class TextMatcher(object):
         if input_text.startswith(match_r):
             input_text = input_text.replace(match_lr, f"{new_value} ")
 
-        if original_text != input_text:
+        if recursive and original_text != input_text:
             return TextMatcher.replace(
                 input_text=input_text,
                 old_value=old_value,
