@@ -53,10 +53,9 @@ def test_coords():
     assert input_text_1[x:y] == 'the'
 
     x, y = tm.coords(input_text=input_text_1,
-                     value='the ')
+                     value='dog')
     print(f"X,Y: {x},{y}: ({input_text_1[x:y]})")
-    assert input_text_1[x:y] == 'the '
-
+    assert input_text_1[x:y] == 'dog'
 
 
 def main():
