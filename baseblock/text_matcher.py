@@ -41,3 +41,50 @@ class TextMatcher(object):
             return True
 
         return False
+
+    @staticmethod
+    def replace(input_text: str,
+                old_value: str,
+                new_value: str,
+                case_sensitive: bool = False) -> bool:
+        """ Check for the existence of a value in input text
+
+        Args:
+            input_text (str): any text string to search in
+            old_value (str): the value that must exist in the input text
+            new_value (str): the value that will replace 'old value' within the input text
+            case_sensitive (bool): True if case sensitivity matters
+
+        Returns:
+            bool: True if the value exists in the input text
+        """
+
+        if not case_sensitive:
+            old_value = old_value.lower()
+            input_text = input_text.lower()
+
+        if old_value == input_text:
+            return new_value
+
+        original_text = input_text
+
+        match_lr = f" {old_value} "
+        if match_lr in input_text:
+            input_text = input_text.replace(match_lr, f" {new_value} ")
+
+        match_l = f" {old_value}"
+        if input_text.endswith(match_l):
+            input_text = input_text.replace(match_lr, f" {new_value}")
+
+        match_r = f"{old_value} "
+        if input_text.startswith(match_r):
+            input_text = input_text.replace(match_lr, f"{new_value} ")
+
+        if original_text != input_text:
+            return TextMatcher.replace(
+                input_text=input_text,
+                old_value=old_value,
+                new_value=new_value,
+                case_sensitive=case_sensitive)
+
+        return input_text
