@@ -80,7 +80,7 @@ class TextMatcher(object):
 
         match_r = f"{old_value} "
         if input_text.startswith(match_r):
-            input_text = input_text.replace(match_lr, f"{new_value} ")
+            input_text = input_text.replace(match_r, f"{new_value} ")
 
         if recursive and original_text != input_text:
             return TextMatcher.replace(

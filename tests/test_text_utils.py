@@ -1,4 +1,3 @@
-from typing import Text
 from baseblock import TextUtils
 
 input_text = "the quick brown fox jumped over the lazy dog"

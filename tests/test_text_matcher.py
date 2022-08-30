@@ -36,6 +36,12 @@ def test_replace():
                       new_value='entity_fox',
                       case_sensitive=False) == "the entity_fox and the entity_fox together outfoxed every foxy entity_fox that foxed foxily"
 
+    # demonstrate that only 'whole-string' matches are performed
+    assert tm.replace(input_text="activists stormed the capital",
+                      old_value='activists',
+                      new_value='entity_activism',
+                      case_sensitive=False) == "entity_activism stormed the capital"
+
 
 def test_coords():
 
