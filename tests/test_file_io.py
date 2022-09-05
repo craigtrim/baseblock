@@ -35,6 +35,14 @@ def test_load_all_files():
     pprint(d_files)
 
 
+def test_load_all_folders():
+
+    input_dir = os.path.join(os.getcwd(), 'tests/test_dir')
+    FileIO.exists_or_error(input_dir)
+    d_files = FileIO.load_all_folders(input_dir)
+    pprint(d_files)
+
+
 def test_parse_yaml():
 
     yaml_input = """
@@ -56,7 +64,7 @@ def test_join():
 
 
 def main():
-    test_load_all_files()
+    test_load_all_folders()
 
 
 if __name__ == "__main__":

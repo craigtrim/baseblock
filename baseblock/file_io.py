@@ -468,6 +468,54 @@ class FileIO(object):
 
         return dict(d)
 
+    @staticmethod
+    def load_all_folders(directory: str,
+                         exclude: list = None) -> list:
+        """ Load all Folders from a directory
+
+        Args:
+            directory (str): the absolute and qualified directory path
+            exclude (list): a list of folders (or sub-folders) to exclude
+
+        Returns:
+            list: list of folder base names
+        """
+
+        # e.g., '.git'
+        if not exclude:
+            exclude = []
+
+        # e.g., '/.git/'
+        exclude_sub = []
+        for sub_folder in exclude:
+            if os.path.sep not in sub_folder:
+                exclude_sub.append(f"{os.path.sep}{sub_folder}{os.path.sep}")
+            else:
+                exclude_sub.append(sub_folder)
+
+        def load_folders() -> list:
+            results = []
+
+            for dirpath, _, _ in os.walk(directory):
+
+                # e.g., exclude '/a/b/c/.git'
+                if os.path.basename(dirpath) in exclude:
+                    continue
+
+                # e.g., exclude '/a/b/c/.git/d/e'
+                def has_excluded_subfolder() -> bool:
+                    for sub_folder in exclude_sub:
+                        if sub_folder in dirpath:
+                            return True
+                    return False
+
+                if not has_excluded_subfolder():
+                    results.append(os.path.basename(dirpath))
+
+            return results
+
+        return load_folders()
+
     def extension(file_name: str) -> str or None:
         """ Extract Extension from a File Name
 

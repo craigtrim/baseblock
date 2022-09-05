@@ -212,6 +212,20 @@ class Enforcer(object):
             pprint(value)
 
     @classmethod
+    def is_dict_of_lists(cls,
+                         value: object,
+                         display: bool = False) -> None:
+        if type(value) not in [dict, defaultdict]:
+            raise DataTypeNotExpectedError(actual_value=value,
+                                           expected_type='dict')
+
+        for k in value:
+            cls.is_list(value[k])
+
+        if display:
+            pprint(value)
+
+    @classmethod
     def is_nonempty_dict(cls,
                          value: object,
                          display: bool = False) -> None:
