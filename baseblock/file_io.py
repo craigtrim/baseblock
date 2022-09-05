@@ -63,7 +63,7 @@ class FileIO(object):
     def normpath(path: str) -> str:
         """ Normalize Path to use forward slashes
 
-        This differs from 
+        This differs from
             os.path.normpath
         in that the Python std lib call will normalize on a platform-specific basis
 
@@ -481,6 +481,8 @@ class FileIO(object):
             list: list of folder base names
         """
 
+        d_folders = defaultdict(list)
+
         # e.g., '.git'
         if not exclude:
             exclude = []
@@ -493,28 +495,28 @@ class FileIO(object):
             else:
                 exclude_sub.append(sub_folder)
 
-        def load_folders() -> list:
-            results = []
+        for dirpath, _, files in os.walk(directory):
+            base_name = os.path.basename(dirpath)
 
-            for dirpath, _, _ in os.walk(directory):
+            # e.g., exclude '/a/b/c/.git'
+            if base_name in exclude:
+                continue
 
-                # e.g., exclude '/a/b/c/.git'
-                if os.path.basename(dirpath) in exclude:
-                    continue
+            # e.g., exclude '/a/b/c/.git/d/e'
+            def has_excluded_subfolder() -> bool:
+                for sub_folder in exclude_sub:
+                    if sub_folder in dirpath:
+                        return True
+                return False
 
-                # e.g., exclude '/a/b/c/.git/d/e'
-                def has_excluded_subfolder() -> bool:
-                    for sub_folder in exclude_sub:
-                        if sub_folder in dirpath:
-                            return True
-                    return False
+            if has_excluded_subfolder():
+                continue
 
-                if not has_excluded_subfolder():
-                    results.append(os.path.basename(dirpath))
+            for name in files:
+                d_folders[base_name].append(os.path.normpath(
+                    os.path.join(dirpath, name)))
 
-            return results
-
-        return load_folders()
+        return dict(d_folders)
 
     def extension(file_name: str) -> str or None:
         """ Extract Extension from a File Name
