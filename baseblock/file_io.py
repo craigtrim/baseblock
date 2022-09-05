@@ -4,16 +4,24 @@
 
 
 import os
-import io
+
 from io import StringIO
-
-import json
-import codecs
-
-import yaml
-from yaml import Loader
+from io import open as io_open
 
 from sys import platform
+from pathlib import Path
+from collections import defaultdict
+from codecs import open as codecs_open
+
+from json import load as json_load
+from json import loads as json_loads
+from json import dumps as json_dumps
+from json.decoder import JSONDecodeError
+
+from yaml import Loader
+from yaml import YAMLError
+from yaml import dump as yaml_dump
+from yaml import load as yaml_load
 
 
 class FileIO(object):
@@ -110,7 +118,7 @@ class FileIO(object):
 
     @staticmethod
     def exists(file_path: str) -> bool:
-        """Check if File or Directory exists
+        """ Check if File or Directory exists
 
         Args:
             file_path (str): a file path
@@ -122,7 +130,7 @@ class FileIO(object):
 
     @staticmethod
     def exists_or_error(file_path: str) -> None:
-        """Raise Exception if File Path does not exist
+        """ Raise Exception if File Path does not exist
 
         Args:
             file_path (str): an input path
@@ -135,7 +143,7 @@ class FileIO(object):
 
     @staticmethod
     def exists_or_create(file_path: str) -> None:
-        """Create File Path if File Path does not exist
+        """ Create File Path if File Path does not exist
 
         Args:
             file_path (str): an input path
@@ -145,7 +153,7 @@ class FileIO(object):
 
     @staticmethod
     def create_dir(dir_name: str) -> None:
-        """Create Directory (recursive)
+        """ Create Directory (recursive)
 
         Args:
             dir_name (str): an input path
@@ -155,7 +163,7 @@ class FileIO(object):
 
     @staticmethod
     def get_file_name(file_path: str) -> str:
-        """Get the File Name From the File Path
+        """ Get the File Name From the File Path
 
         Args:
             file_path (str): the path to the file
@@ -170,7 +178,7 @@ class FileIO(object):
 
     @staticmethod
     def debug(data: object) -> None:
-        """Debug Mechanism for Examining 'Stack Trace'
+        """ Debug Mechanism for Examining 'Stack Trace'
 
         Args:
             data (object): the JSON object
@@ -185,14 +193,14 @@ class FileIO(object):
     @staticmethod
     def write_json(data: object,
                    file_path: str) -> None:
-        """Write JSON to File
+        """ Write JSON to File
 
         Args:
             data (object): the JSON object
             file_path (str): the absolute and qualified output file path
         """
-        with io.open(file_path, "w") as json_file:
-            json_dump = json.dumps(data,
+        with io_open(file_path, "w") as json_file:
+            json_dump = json_dumps(data,
                                    indent=4,
                                    sort_keys=False,
                                    ensure_ascii=True)
@@ -200,7 +208,7 @@ class FileIO(object):
 
     @staticmethod
     def read_json(file_path: str) -> object:
-        """Read JSON from File
+        """ Read JSON from File
 
         Args:
             file_path (str): the absolute and qualified output file path
@@ -210,13 +218,13 @@ class FileIO(object):
             [type]: the JSON object
         """
         with open(file_path) as json_file:
-            return json.load(json_file)
+            return json_load(json_file)
 
     @staticmethod
     def read_string(file_path: str,
                     encoding: str = "utf-8",
                     replace_newlines: bool = False) -> str:
-        """Read String from File
+        """ Read String from File
 
         Args:
             file_path (str): the absolute and qualified input file path
@@ -234,7 +242,7 @@ class FileIO(object):
     def write_string(input_text: str,
                      file_path: str,
                      file_encoding: str = "utf-8") -> None:
-        """Write String to File
+        """ Write String to File
 
         Args:
             input_text (str): the string contents to write to file
@@ -247,7 +255,7 @@ class FileIO(object):
         if not input_text or type(input_text) != str:
             raise ValueError
 
-        target = codecs.open(file_path,
+        target = codecs_open(file_path,
                              mode="w",
                              encoding=file_encoding)
 
@@ -258,7 +266,7 @@ class FileIO(object):
     def write_lines(lines: list,
                     file_path: str,
                     file_encoding: str = "utf-8") -> None:
-        """Write Lines to File
+        """ Write Lines to File
 
         Args:
             lines (list): the list to write to file
@@ -277,18 +285,18 @@ class FileIO(object):
     @staticmethod
     def write_yaml(d: dict,
                    file_path: str) -> None:
-        """Write YAML to File
+        """ Write YAML to File
 
         Args:
             d (dict): the py YAML dictionary
             file_path (str): the absolute and qualified output file path
         """
         with open(file_path, 'w') as file:
-            documents = yaml.dump(d, file)
+            documents = yaml_dump(d, file)
 
     @staticmethod
     def read_yaml(file_path: str) -> dict:
-        """Read YAML from File
+        """ Read YAML from File
 
         Args:
             file_path (str): the absolute and qualified input file path
@@ -303,14 +311,14 @@ class FileIO(object):
 
         with open(file_path, 'r') as stream:
             try:
-                return yaml.load(stream, Loader)
-            except yaml.YAMLError:
+                return yaml_load(stream, Loader)
+            except YAMLError:
                 raise ValueError(f"Invalid YAML File: {file_path}")
 
     @staticmethod
     def read_lines(file_path: str,
                    file_encoding: str = "utf-8") -> list:
-        """Read Lines of a File into a List
+        """ Read Lines of a File into a List
 
         Args:
             file_path (str): the absolute and qualified input file path
@@ -319,7 +327,7 @@ class FileIO(object):
         Returns:
             list: each line in the file as a list
         """
-        target = codecs.open(file_path,
+        target = codecs_open(file_path,
                              mode="r",
                              encoding=file_encoding)
         lines = [x.replace("\n", "").strip() for x in target.readlines() if x]
@@ -330,7 +338,7 @@ class FileIO(object):
     @staticmethod
     def has_files(directory: str,
                   extension: str) -> bool:
-        """Check if files exist in a directory by extension
+        """ Check if files exist in a directory by extension
 
         Args:
             file_path (str): the absolute and qualified directory path
@@ -347,7 +355,7 @@ class FileIO(object):
                    limit: int = None,
                    blacklist: list = None,
                    recursive: bool = False) -> list:
-        """Load Files from a directory
+        """ Load Files from a directory
 
         Args:
             directory (str): the absolute and qualified directory path
@@ -404,8 +412,52 @@ class FileIO(object):
         return [x for x in load_files() if is_valid(x)]
 
     @staticmethod
+    def load_all_files(directory: str) -> list:
+        """ Load all Files from a directory and key by extension
+
+        Args:
+            directory (str): the absolute and qualified directory path
+
+        Returns:
+            list: list of files
+        """
+
+        d = defaultdict(list)
+
+        def load_files() -> list:
+            results = []
+
+            for dirpath, _, files in os.walk(directory):
+                for name in files:
+                    results.append(os.path.normpath(
+                        os.path.join(dirpath, name)))
+
+            return results
+
+        for f in load_files():
+            d[FileIO.extension(f)].append(f)
+
+        return dict(d)
+
+    def extension(file_name: str) -> str or None:
+        """ Extract Extension from a File Name
+
+        Args:
+            file_name (str): a file name
+
+        Returns:
+            str: the file extension
+        """
+        ext = Path(file_name).suffix
+        if ext.startswith('.'):
+            return ext[1:]
+        if not len(ext):
+            return None
+        return ext
+
+    @staticmethod
     def parse_yaml(file_data: str) -> dict:
-        """Read YAML from String
+        """ Read YAML from String
 
         Args:
             file_data (str): the string-ified YAML data
@@ -417,13 +469,13 @@ class FileIO(object):
             dict: a py YAML dictionary
         """
         try:
-            return yaml.load(StringIO(file_data), Loader)
-        except yaml.YAMLError:
+            return yaml_load(StringIO(file_data), Loader)
+        except YAMLError:
             raise ValueError(f"Invalid YAML Data")
 
     @staticmethod
     def parse_json(file_data: str) -> dict:
-        """Read JSON from String
+        """ Read JSON from String
 
         Args:
             file_data (str): the string-ified JSON data
@@ -441,7 +493,7 @@ class FileIO(object):
             if file_data_type == list:
                 return list(file_data)
 
-            return json.loads(file_data)
+            return json_loads(file_data)
 
-        except json.decoder.JSONDecodeError:
+        except JSONDecodeError:
             raise ValueError(f"Invalid JSON Data")

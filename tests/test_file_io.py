@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 
 
 from baseblock import FileIO
@@ -26,6 +27,14 @@ def test_parse_json():
     assert type(d_result) == dict
 
 
+def test_load_all_files():
+
+    input_dir = os.path.join(os.getcwd(), 'tests/test_dir')
+    FileIO.exists_or_error(input_dir)
+    d_files = FileIO.load_all_files(input_dir)
+    pprint(d_files)
+
+
 def test_parse_yaml():
 
     yaml_input = """
@@ -42,8 +51,13 @@ def test_parse_yaml():
 
 
 def test_join():
-    assert FileIO.join('alpha/beta', 'gamma/delta', 'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
+    assert FileIO.join('alpha/beta', 'gamma/delta',
+                       'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
+
+
+def main():
+    test_load_all_files()
 
 
 if __name__ == "__main__":
-    test_join()
+    main()
