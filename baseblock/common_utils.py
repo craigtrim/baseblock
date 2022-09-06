@@ -48,3 +48,48 @@ def prov_stack():
             stack2.append(x)
 
     return stack2
+
+
+def flatten_list(values: list) -> list:
+    """ Flatten a List
+
+    Args:
+        values (list): a list of any nested proportion
+        Sample Input:
+            [
+                [
+                    [
+                        'alpha'
+                    ],
+                    [
+                        'beta'
+                    ]
+                ]
+            ]
+
+    Raises:
+        ValueError: expects only lists and strings; other data types raise this error
+
+    Returns:
+        list: a flat list of strings
+        Sample Output:
+            [
+                'alpha', 'beta'
+            ]
+    """
+    if type(values) != list:
+        raise ValueError(type(values))
+
+    normalized = []
+
+    def iter(item: object) -> None:
+        if type(item) == str:
+            normalized.append(item)
+        elif type(item) == list:
+            [iter(x) for x in item]
+        else:
+            raise ValueError(type(item))
+
+    [iter(x) for x in values]
+
+    return normalized
