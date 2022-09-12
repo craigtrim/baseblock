@@ -8,6 +8,9 @@ import os
 from io import StringIO
 from io import open as io_open
 
+from csv import reader as csv_reader
+from typing import Generator
+
 from sys import platform
 from pathlib import Path
 from collections import defaultdict
@@ -334,6 +337,33 @@ class FileIO(object):
         target.close()
 
         return lines
+
+    @staticmethod
+    def yield_lines(file_path: str,
+                    file_encoding: str = "utf-8") -> list:
+        """Read Lines of a File using a yield Generator
+
+        Args:
+            file_path (str): the absolute and qualified input file path
+            file_encoding (str, optional): the file encoding. Defaults to "utf-8".
+
+        Returns:
+            Generator: a yield function
+            Sample Output:
+                ['A3.26\t1993\t2\t2']
+                ['A3.26\t1994\t2\t2']
+                ['A3.26\t1995\t6\t6']
+                ['A3.26\t1996\t4\t4']
+                ['A3.26\t1997\t5\t5']
+                ['A3.26\t1998\t1\t1']
+                ['A3.26\t1999\t4\t3']
+
+            Notes:
+                each output line is a list with one element that requires independent delimitation            
+        """
+        with codecs_open(file_path, mode="r", encoding=file_encoding) as f:
+            for line in csv_reader(f):
+                yield line
 
     @staticmethod
     def has_files(directory: str,

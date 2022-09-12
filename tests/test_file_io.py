@@ -1,6 +1,6 @@
 import os
 from pprint import pprint
-
+from typing import Generator
 
 from baseblock import FileIO
 
@@ -63,8 +63,17 @@ def test_join():
                        'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
 
 
+def test_yield_lines():
+    input_file = os.path.join(os.getcwd(), 'tests/test_files/simple.csv')
+    FileIO.exists_or_error(input_file)
+
+    assert FileIO.yield_lines(input_file)
+    for line in FileIO.yield_lines(input_file):
+        assert type(line) == list
+
+
 def main():
-    test_load_all_folders()
+    test_yield_lines()
 
 
 if __name__ == "__main__":
