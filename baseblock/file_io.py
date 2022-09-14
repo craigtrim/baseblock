@@ -92,6 +92,10 @@ class FileIO(object):
         return os.path.normpath(os.path.join(*args))
 
     @staticmethod
+    def join_cwd(*args) -> str:
+        return os.path.normpath(os.path.join(os.getcwd(), *args))
+
+    @staticmethod
     def temp(data: object) -> str:
         """ Write a Data Object to a Temp File
 
