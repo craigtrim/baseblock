@@ -76,7 +76,7 @@ class TextMatcher(object):
 
         match_l = f" {old_value}"
         if input_text.endswith(match_l):
-            input_text = input_text.replace(match_lx, f" {new_value}")
+            input_text = input_text.replace(match_l, f" {new_value}")
 
         match_r = f"{old_value} "
         if input_text.startswith(match_r):
