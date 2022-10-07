@@ -189,13 +189,28 @@ class TextUtils(object):
             x (str): the first string to compare
             y (str): the second string to compare
 
+        Raises:
+            ValueError: final score is less than 0.0
+            ValueError: final score is greater than 0.0
+            ValueError: final score is not of type float
+
         Returns:
-            float: the Jaccard similarity score (0 <= x <= 100)
+            float: the Jaccard similarity score (0.0 <= x <= 1.0)
         """
         intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
         union_cardinality = len(set.union(*[set(x), set(y)]))
         sim = intersection_cardinality/float(union_cardinality)
-        return round(sim, 3)
+        result = round(sim, 3)
+
+        # this is our contract to the consumer!
+        if result < 0.0:
+            raise ValueError
+        if result > 1.0:
+            raise ValueError
+        if type(result) != float:
+            raise ValueError
+
+        return result
 
     @staticmethod
     def split_on_len(input_text: str,

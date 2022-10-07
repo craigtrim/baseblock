@@ -282,10 +282,18 @@ class FileIO(object):
 
         Raises:
             ValueError: Invalid Input
+            NotImplementedError: Input is neither a List nor Str
         """
 
-        input_text = '\n'.join(lines)
-        FileIO.write_string(input_text=input_text,
+        def get_input_text() -> str:
+            _type = type(lines)
+            if _type == list:
+                return '\n'.join(lines)
+            if _type == str:
+                return str(lines)
+            raise NotImplementedError(_type)
+
+        FileIO.write_string(input_text=get_input_text(),
                             file_path=file_path,
                             file_encoding=file_encoding)
 
