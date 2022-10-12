@@ -95,7 +95,7 @@ class Enforcer(object):
     def is_int_or_float(cls,
                         value: object,
                         display: bool = False) -> None:
-        """ Check if the incoming value is an Int or Float 
+        """ Check if the incoming value is an Int or Float
 
         Args:
             value (object): the incoming value

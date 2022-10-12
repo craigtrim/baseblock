@@ -198,6 +198,18 @@ class FileIO(object):
         raise ValueError(f"Wrote Temp File: {file_path}")
 
     @staticmethod
+    def write_image(data: object,
+                    file_path: str) -> None:
+        """ Write an Image to File
+
+        Args:
+            data (object): the image
+            file_path (str): the absolute and qualified output file path
+        """
+        with open(file_path, 'wb') as f:
+            f.write(data)
+
+    @staticmethod
     def write_json(data: object,
                    file_path: str) -> None:
         """ Write JSON to File
@@ -307,7 +319,7 @@ class FileIO(object):
             file_path (str): the absolute and qualified output file path
         """
         with open(file_path, 'w') as file:
-            documents = yaml_dump(d, file)
+            yaml_dump(d, file)
 
     @staticmethod
     def read_yaml(file_path: str) -> dict:
@@ -371,7 +383,7 @@ class FileIO(object):
                 ['A3.26\t1999\t4\t3']
 
             Notes:
-                each output line is a list with one element that requires independent delimitation            
+                each output line is a list with one element that requires independent delimitation
         """
         with codecs_open(file_path, mode="r", encoding=file_encoding) as f:
             for line in csv_reader(f):
@@ -592,7 +604,7 @@ class FileIO(object):
         try:
             return yaml_load(StringIO(file_data), Loader)
         except YAMLError:
-            raise ValueError(f"Invalid YAML Data")
+            raise ValueError("Invalid YAML Data")
 
     @staticmethod
     def parse_json(file_data: str) -> dict:
@@ -617,4 +629,4 @@ class FileIO(object):
             return json_loads(file_data)
 
         except JSONDecodeError:
-            raise ValueError(f"Invalid JSON Data")
+            raise ValueError("Invalid JSON Data")

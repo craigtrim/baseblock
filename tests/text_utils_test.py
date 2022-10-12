@@ -1,6 +1,23 @@
+from mimetypes import common_types
 from baseblock import TextUtils
 
 input_text = "the quick brown fox jumped over the lazy dog"
+
+
+def test_longest_common_phrase():
+
+    tokens_1 = ['what', 'is', 'the', 'earliest',
+                'known', 'age', 'of', 'fossils', '?']
+
+    tokens_2 = ['the', 'earliest', 'known', 'age', 'of',
+                'fossils', 'is', '3.7', 'billion', 'years', 'old', '.']
+
+    common_tokens = TextUtils.longest_common_phrase(
+        tokens_1=tokens_1,
+        tokens_2=tokens_2)
+
+    assert common_tokens == ['the', 'earliest',
+                             'known', 'age', 'of', 'fossils']
 
 
 def test_title_case():
@@ -98,3 +115,11 @@ def test_remove_punctuation():
 
     assert TextUtils.remove_punctuation(
         'alpha ... beta gamma') == 'alpha  beta gamma'
+
+
+def main():
+    test_longest_common_phrase()
+
+
+if __name__ == "__main__":
+    main()

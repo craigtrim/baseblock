@@ -83,7 +83,7 @@ class CryptoBase(object):
         try:
             f = Fernet(self._key)
             return f.decrypt(message).decode(enc)
-        except InvalidToken as e:
+        except InvalidToken:
             raise ValueError('Invalid Token')
 
 

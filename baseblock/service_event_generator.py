@@ -34,7 +34,7 @@ class ServiceEventGenerator(BaseObject):
         Args:
             service_name (str): The name of the Python Service that generated this event.
             event_name (str): The name of this event.
-                The service name and event name should be differentiated. 
+                The service name and event name should be differentiated.
                 It is possible a service may generate multiple events.
             stopwatch (Stopwatch): Represents the time cost for the service
             data (dict): The actual event data

@@ -3,6 +3,9 @@
 """ Text Utility Methods: Common Functions without Special Libraries """
 
 
+from typing import List
+from typing import Optional
+
 from os import sep
 from statistics import mean
 from unicodedata2 import category
@@ -30,6 +33,74 @@ class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
     @staticmethod
+    def longest_common_phrase(tokens_1: List[str],
+                              tokens_2: List[str]) -> Optional[List[str]]:
+        """ Find the Longest Common Phrase in Tokens-2 relative to Tokens-1
+
+        Args:
+            tokens_1 (list): the first tokenized list
+                ['what', 'is', 'the', 'earliest', 'known', 'age', 'of', 'fossils', '?']
+            tokens_2 (list): the second tokenized list
+                ['the', 'earliest', 'known', 'age', 'of', 'fossils', 'is', '3.7', 'billion', 'years', 'old', '.']
+
+        Returns:
+            Optional[List[str]]: the common span (if any)
+                ['the', 'earliest', 'known', 'age', 'of', 'fossils']
+        """
+
+        text_2 = ' '.join(tokens_2).strip()
+
+        def extract(tokens: list,
+                    gram_size: int) -> set:
+            results = []
+
+            if gram_size == len(tokens):
+                return set([' '.join(x) for x in tokens])
+
+            if gram_size == 1:
+                return set([' '.join(x) for x in tokens])
+
+            x = 0
+            y = x + gram_size
+
+            while y <= len(tokens):
+                results.append(tokens[x: y])
+
+                x += 1
+                y = x + gram_size
+
+            return set([' '.join(x) for x in results])
+
+        max_tokens = min([len(tokens_1), len(tokens_2)])
+
+        while max_tokens > 0:
+
+            extracts_1 = extract(tokens_1, max_tokens)
+            extracts_2 = extract(tokens_2, max_tokens)
+
+            common = extracts_1.intersection(extracts_2)
+
+            if common:
+
+                common_phrase = list(common)[0]
+
+                print(common_phrase)
+                print(text_2)
+
+                x = text_2.lower().index(common_phrase)
+                y = x + len(common_phrase)
+
+                return text_2[x: y].split()
+                # return x, y
+
+            if len(common):
+                break
+
+            max_tokens -= 1
+
+        return None
+
+    @ staticmethod
     def is_punctuation(char: str) -> bool:
         """ Checks whether `char` is a punctuation character.
 
@@ -59,7 +130,7 @@ class TextUtils(object):
 
         return False
 
-    @staticmethod
+    @ staticmethod
     def has_punctuation(input_text: str):
         """Checks whether the input text has any punctuation characters."""
 
@@ -69,7 +140,7 @@ class TextUtils(object):
 
         return False
 
-    @staticmethod
+    @ staticmethod
     def remove_punctuation(input_text: str):
         """Checks whether the input text has any punctuation characters."""
 
@@ -80,7 +151,7 @@ class TextUtils(object):
 
         return ''.join(buffer)
 
-    @staticmethod
+    @ staticmethod
     def find_subsumed_tokens(tokens: list) -> list:
         """ Find Subsumed Tokens (if any)
 
@@ -138,8 +209,8 @@ class TextUtils(object):
         """ Choose Random Line from Long Input String
 
         The function will segment the input text and if only one line exists, this will be returned
-        if multiple lines exist, the function will randomly choose a single line, assuming the length 
-            of that line is near the mean 
+        if multiple lines exist, the function will randomly choose a single line, assuming the length
+            of that line is near the mean
 
         Use Case:
 
@@ -181,7 +252,7 @@ class TextUtils(object):
             return lines[0]
         return random_line(lines)
 
-    @staticmethod
+    @ staticmethod
     def jaccard_similarity(x: str, y: str) -> float:
         """ returns the jaccard similarity between two lists
 
@@ -199,7 +270,7 @@ class TextUtils(object):
         """
         intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
         union_cardinality = len(set.union(*[set(x), set(y)]))
-        sim = intersection_cardinality/float(union_cardinality)
+        sim = intersection_cardinality / float(union_cardinality)
         result = round(sim, 3)
 
         # this is our contract to the consumer!
@@ -212,7 +283,7 @@ class TextUtils(object):
 
         return result
 
-    @staticmethod
+    @ staticmethod
     def split_on_len(input_text: str,
                      threshold: int = 7) -> str or None:
         """Insert New Lines into Label Text
@@ -249,7 +320,7 @@ class TextUtils(object):
 
         return sep.join(master).strip()
 
-    @staticmethod
+    @ staticmethod
     def ends_with_punctuation(input_text: str) -> bool:
         """ Determine if Input Text ends with punctuation
 
@@ -264,7 +335,7 @@ class TextUtils(object):
 
         return input_text[-1] in ['.', '?', '!']  # common ending punctuation
 
-    @staticmethod
+    @ staticmethod
     def remove_ending_punctuation(input_text: str) -> str:
         """ Remove Ending (terminating sequence) Punctuation
 
@@ -282,7 +353,7 @@ class TextUtils(object):
             return input_text[:-1]
         return input_text
 
-    @staticmethod
+    @ staticmethod
     def split_on_punctuation(input_text: str,
                              punkt: list = ['!', '?']) -> list:
         """ Split (segment) a line on common punctuation
@@ -304,7 +375,7 @@ class TextUtils(object):
 
         return lines
 
-    @staticmethod
+    @ staticmethod
     def update_spacing(input_text: str) -> str:
         """ Correct Syntactical Spacing Inconsistencies
 
@@ -324,7 +395,7 @@ class TextUtils(object):
 
         return input_text
 
-    @staticmethod
+    @ staticmethod
     def remove_double_spaces(input_text: str) -> str:
         """ Remove Double Spaces in a String
 
@@ -339,7 +410,7 @@ class TextUtils(object):
 
         return input_text
 
-    @staticmethod
+    @ staticmethod
     def update_csvs(input_text: str) -> str:
         """ Synatically correct Comma Separated values in Natural Language
 
@@ -357,7 +428,7 @@ class TextUtils(object):
         """
         return input_text
 
-    @staticmethod
+    @ staticmethod
     def update_determiners(input_text: str) -> str:
         """ Update Determiners in a text string
 
@@ -400,7 +471,7 @@ class TextUtils(object):
 
         return ' '.join(results).strip()
 
-    @staticmethod
+    @ staticmethod
     def startswith_vowel(input_text: str) -> str:
         """ Determine if Input Text starts with a vowel
 
@@ -417,7 +488,7 @@ class TextUtils(object):
 
         return input_text[0].lower() in vowels
 
-    @staticmethod
+    @ staticmethod
     def lower_case(input_text: str) -> str:
         """ Perform Lower Casing on Input
 
@@ -438,7 +509,7 @@ class TextUtils(object):
 
         return ' '.join(tokens).strip()
 
-    @staticmethod
+    @ staticmethod
     def sentence_case(input_text: str) -> str:
         """ Perform Sentence Casing on Input
 
@@ -473,7 +544,7 @@ class TextUtils(object):
 
         return ' '.join(results).strip()
 
-    @staticmethod
+    @ staticmethod
     def title_case(input_text: str) -> str:
         """ Perform Title Casing on Input
 
