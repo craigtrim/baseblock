@@ -33,6 +33,28 @@ class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
     @staticmethod
+    def remove_duplicated_phrases(text_1: str,
+                                  text_2: str) -> str:
+        """ Remove Duplicated Phrases
+
+        Purpose:
+        -   Any Phrase in Text_2 that exists in Text_1 will cause
+            that phrase to be removed from Text_1
+
+        Args:
+            text_1 (str): the text to modify
+            text_2 (str): the read-only text to use for removal
+
+        Returns:
+            str: the modified text_1 (if applicable)
+        """
+
+        if text_2 in text_1:
+            text_1 = text_1.replace(text_2, '').strip()
+
+        return text_1
+
+    @staticmethod
     def longest_common_phrase(tokens_1: List[str],
                               tokens_2: List[str]) -> Optional[List[str]]:
         """ Find the Longest Common Phrase in Tokens-2 relative to Tokens-1

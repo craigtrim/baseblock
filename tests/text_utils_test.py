@@ -4,6 +4,19 @@ from baseblock import TextUtils
 input_text = "the quick brown fox jumped over the lazy dog"
 
 
+def test_remove_duplicated_phrases():
+
+    text_1 = "The earliest known age of fossils is 3.7 billion years old. Some would argue that life arose within a few hundred million years of Earth's origin, perhaps as early as 4.2 billion years ago, but the violent bombardment and geological activity of Earth's first few hundred million years have obliterated any firm evidence of such early life. Nevertheless, even the 3.7 - billion - year age of the earliest fossils shows that life has been a feature of Planet Earth for most of its history."
+
+    text_2 = "The earliest known age of fossils is 3.7 billion years old."
+
+    text_1 = TextUtils.remove_duplicated_phrases(
+        text_1=text_1,
+        text_2=text_2)
+
+    assert text_1 == "Some would argue that life arose within a few hundred million years of Earth's origin, perhaps as early as 4.2 billion years ago, but the violent bombardment and geological activity of Earth's first few hundred million years have obliterated any firm evidence of such early life. Nevertheless, even the 3.7 - billion - year age of the earliest fossils shows that life has been a feature of Planet Earth for most of its history."
+
+
 def test_longest_common_phrase():
 
     tokens_1 = ['what', 'is', 'the', 'earliest',
@@ -118,7 +131,7 @@ def test_remove_punctuation():
 
 
 def main():
-    test_longest_common_phrase()
+    test_remove_duplicated_phrases()
 
 
 if __name__ == "__main__":
