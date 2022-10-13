@@ -101,22 +101,16 @@ class TextUtils(object):
             extracts_2 = extract(tokens_2, max_tokens)
 
             common = extracts_1.intersection(extracts_2)
-
             if common:
 
                 common_phrase = list(common)[0]
-
-                print(common_phrase)
-                print(text_2)
+                if common_phrase not in text_2.lower():
+                    return None
 
                 x = text_2.lower().index(common_phrase)
                 y = x + len(common_phrase)
 
                 return text_2[x: y].split()
-                # return x, y
-
-            if len(common):
-                break
 
             max_tokens -= 1
 
