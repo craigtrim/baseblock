@@ -17,7 +17,7 @@ def test_remove_duplicated_phrases():
     assert text_1 == "Some would argue that life arose within a few hundred million years of Earth's origin, perhaps as early as 4.2 billion years ago, but the violent bombardment and geological activity of Earth's first few hundred million years have obliterated any firm evidence of such early life. Nevertheless, even the 3.7 - billion - year age of the earliest fossils shows that life has been a feature of Planet Earth for most of its history."
 
 
-def test_longest_common_phrase():
+def test_longest_common_phrase_1():
 
     tokens_1 = ['what', 'is', 'the', 'earliest',
                 'known', 'age', 'of', 'fossils', '?']
@@ -31,6 +31,19 @@ def test_longest_common_phrase():
 
     assert common_tokens == ['the', 'earliest',
                              'known', 'age', 'of', 'fossils']
+
+
+def test_longest_common_phrase_2():
+
+    tokens_1 = ['ask', 'me', 'a', 'random', 'question']
+
+    tokens_2 = ['what', 'is', 'a', 'watt']
+
+    common_tokens = TextUtils.longest_common_phrase(
+        tokens_1=tokens_1,
+        tokens_2=tokens_2)
+
+    assert not common_tokens
 
 
 def test_title_case():
@@ -131,7 +144,7 @@ def test_remove_punctuation():
 
 
 def main():
-    test_remove_duplicated_phrases()
+    test_longest_common_phrase_2()
 
 
 if __name__ == "__main__":

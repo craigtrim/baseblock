@@ -95,7 +95,7 @@ class TextUtils(object):
 
         max_tokens = min([len(tokens_1), len(tokens_2)])
 
-        while max_tokens > 0:
+        while max_tokens > 2:
 
             extracts_1 = extract(tokens_1, max_tokens)
             extracts_2 = extract(tokens_2, max_tokens)
