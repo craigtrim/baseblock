@@ -17,7 +17,7 @@ class CryptoBase(object):
     """ Crytography Base Functions """
 
     def __init__(self,
-                 crypto_key: Optional[str]):
+                 crypto_key: Optional[str] = None):
         """ Change Log
 
         Created:
