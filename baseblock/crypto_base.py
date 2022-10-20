@@ -3,6 +3,10 @@
 """ Crytography Base Functions """
 
 
+import os
+
+from typing import Optional
+
 from cryptography.fernet import Fernet
 from cryptography.fernet import InvalidToken
 
@@ -12,14 +16,41 @@ enc = "utf-8"
 class CryptoBase(object):
     """ Crytography Base Functions """
 
-    def __init__(self):
-        """
+    def __init__(self,
+                 crypto_key: Optional[str]):
+        """ Change Log
+
         Created:
             2-Mar-2022
             craigtrim@gmail.com
             *   https://github.com/craigtrim/baseblock/issues/1
+        Updated:
+            20-Oct-2022
+            craigtrim@gmail.com
+            *   remove hard-coded crypto key
+                https://github.com/craigtrim/baseblock/issues/4
+
+        Args:
+            crypto_key (str): the fernet private key
         """
-        self._key = "vYuJ9Y4_FtIlClfTsvIiMTDg4x-Xco_FeGWxNpo_7Sw="
+        def get_key() -> str:
+            if crypto_key:
+                return crypto_key
+            if 'BASEBLOCK_CRYPTO_KEY' in os.environ:
+                return os.environ['BASEBLOCK_CRYPTO_KEY']
+            raise ValueError('Crypto Key Not Found')
+
+        self._key = get_key()
+
+    @staticmethod
+    def generate_private_key() -> str:
+        """ Use to Generate Private Key for ecrypting and decrypting text
+        This key will be passed in as a value to the constructor of CryptoBase
+
+        Returns:
+            str: the private key
+        """
+        return Fernet.generate_key()
 
     def encrypt_str(self,
                     some_input: str) -> str:

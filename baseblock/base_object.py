@@ -15,12 +15,14 @@ class BaseObject(object):
 
     def __init__(self,
                  component_name: str):
-        """
+        """ Change Log
+
         Created:
             29-Sept-2021
             craigtrim@gmail.com
-        :param component_name:
-            the component name
+
+        Args:
+            component_name (str): the name of the component to log for
         """
         self.logger = logging.getLogger(component_name)
         isEnabledFor = self.logger.isEnabledFor
