@@ -4,6 +4,101 @@ from baseblock import TextUtils
 input_text = "the quick brown fox jumped over the lazy dog"
 
 
+def test_most_similar_phrase_1():
+
+    tokens_1 = ['where', 'can', 'I', 'find', 'the', 'library']
+    tokens_2 = ['I', 'understand', 'you',
+                'want', 'to', 'find', 'the', 'library']
+
+    results = TextUtils.most_similar_phrase(
+        tokens_1=tokens_1,
+        tokens_2=tokens_2,
+        window_size=4,
+        score_threshold=0.70,
+        debug=False)
+
+    assert results == {
+        0.75: {
+            'tokens_1': 'can i find the',
+            'tokens_2': 'want to find the'
+        },
+        0.929: {
+            'tokens_1': 'i find the library',
+            'tokens_2': 'to find the library',
+        }
+    }
+
+
+def test_most_similar_phrase_2():
+
+    tokens_1 = ['where', 'can', 'I', 'find', 'the', 'library']
+    tokens_2 = ['I', 'understand', 'you',
+                'want', 'to', 'find', 'the', 'library']
+
+    results = TextUtils.most_similar_phrase(
+        tokens_1=tokens_1,
+        tokens_2=tokens_2,
+        window_size=6,
+        score_threshold=0.70,
+        debug=False)
+
+    assert results == {
+        0.824: {
+            'tokens_1': 'where can i find the library',
+            'tokens_2': 'you want to find the library'
+        }
+    }
+
+
+def test_sliding_window():
+
+    tokens = input_text.split()
+    assert tokens == [
+        'the',
+        'quick',
+        'brown',
+        'fox',
+        'jumped',
+        'over',
+        'the',
+        'lazy',
+        'dog'
+    ]
+
+    bigrams = TextUtils.sliding_window(tokens=tokens, window_size=2)
+    assert bigrams == [
+        ['the', 'quick'],
+        ['quick', 'brown'],
+        ['brown', 'fox'],
+        ['fox', 'jumped'],
+        ['jumped', 'over'],
+        ['over', 'the'],
+        ['the', 'lazy'],
+        ['lazy', 'dog']
+    ]
+
+    trigrams = TextUtils.sliding_window(tokens=tokens, window_size=3)
+    assert trigrams == [
+        ['the', 'quick', 'brown'],
+        ['quick', 'brown', 'fox'],
+        ['brown', 'fox', 'jumped'],
+        ['fox', 'jumped', 'over'],
+        ['jumped', 'over', 'the'],
+        ['over', 'the', 'lazy'],
+        ['the', 'lazy', 'dog']
+    ]
+
+    quadgrams = TextUtils.sliding_window(tokens=tokens, window_size=4)
+    assert quadgrams == [
+        ['the', 'quick', 'brown', 'fox'],
+        ['quick', 'brown', 'fox', 'jumped'],
+        ['brown', 'fox', 'jumped', 'over'],
+        ['fox', 'jumped', 'over', 'the'],
+        ['jumped', 'over', 'the', 'lazy'],
+        ['over', 'the', 'lazy', 'dog']
+    ]
+
+
 def test_remove_duplicated_phrases():
 
     text_1 = "The earliest known age of fossils is 3.7 billion years old. Some would argue that life arose within a few hundred million years of Earth's origin, perhaps as early as 4.2 billion years ago, but the violent bombardment and geological activity of Earth's first few hundred million years have obliterated any firm evidence of such early life. Nevertheless, even the 3.7 - billion - year age of the earliest fossils shows that life has been a feature of Planet Earth for most of its history."
@@ -144,7 +239,7 @@ def test_remove_punctuation():
 
 
 def main():
-    test_longest_common_phrase_2()
+    test_most_similar_phrase_2()
 
 
 if __name__ == "__main__":

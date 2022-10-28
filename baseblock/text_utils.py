@@ -55,6 +55,122 @@ class TextUtils(object):
         return text_1
 
     @staticmethod
+    def cartesian(matches: list) -> list:
+        """
+        Purpose:
+            Find a list of candidate token sequences within the normalized_input_text
+        Time per Call:
+            0.5ms < x 1.0ms
+        :param matches:
+            a list of 1..* tokens forming a match pattern
+        :return:
+            a list of possible token sequences
+        """
+        from itertools import product
+
+        cartesian = []
+        for element in product(*matches):
+            cartesian.append(element)
+
+        return cartesian
+
+    @staticmethod
+    def sliding_window(tokens: List[str],
+                       window_size: int) -> Optional[List[str]]:
+        """ Perform Sliding Window (e.g., n-gram) extraction over a list of tokens
+
+        Args:
+            tokens (List[str]): the incoming tokens
+            window_size (int): the window (e.g., n-gram) size
+
+        Returns:
+            Optional[List[str]]: the outgoing tokens (if any)
+        """
+
+        if window_size > len(tokens):
+            return None
+
+        if window_size == len(tokens):
+            return [tokens]
+
+        results = []
+        total_tokens = len(tokens)
+
+        for i in range(total_tokens):
+
+            buffer = []
+
+            x = 0
+            while x < window_size:
+
+                pos = x + i
+                if pos < total_tokens:
+                    buffer.append(tokens[pos])
+
+                x += 1
+
+            if len(buffer) == window_size:
+                results.append(buffer)
+                buffer = []
+
+        return results
+
+    @staticmethod
+    def most_similar_phrase(tokens_1: List[str],
+                            tokens_2: List[str],
+                            window_size: int,
+                            score_threshold: float,
+                            debug: bool = False) -> dict:
+        """ Find the Most Similar Phrase in Tokens-2 relative to Tokens-1
+
+        Implementation Note:
+            How is this different from 'longest-common-phrase'?
+
+            In the example below, there are no common sequences between tokens-1 and tokens-2
+            This function will find "nearly similar" sequences and return the most similar
+
+        Args:
+            tokens_1 (list): the first tokenized list
+                ['where', 'is', 'the', 'library', '?']
+            tokens_2 (list): the second tokenized list
+                ['I', 'understand', 'you', 'want', 'to', 'know', 'where', 'the', 'library', 'is', '.']
+            window_size (int, Optional): n-Gram window size for comparison.
+            score_threshold (float): when threshold is met, return the results (if any)
+            debug (bool, Optional): When True, print results to console. default is False.
+
+        Returns:
+            the most similar span (list) with similarity score
+        """
+
+        tokens_1 = [x.lower().strip() for x in tokens_1]
+        tokens_2 = [x.lower().strip() for x in tokens_2]
+
+        t1 = TextUtils.sliding_window(
+            tokens_1,
+            window_size=window_size)
+
+        t2 = TextUtils.sliding_window(
+            tokens_2,
+            window_size=window_size)
+
+        d_results = {}
+
+        for item_1 in [' '.join(x) for x in t1]:
+            for item_2 in [' '.join(x) for x in t2]:
+
+                if item_1 == item_2:
+                    return {100: {"tokens_1": item_1, "tokens_2": item_2}}
+
+                score = TextUtils.jaccard_similarity(item_1, item_2)
+                if debug:
+                    print(f"({item_1}) vs. ({item_2}) = {score}")
+
+                if score >= score_threshold:
+                    d_results[score] = {"tokens_1": item_1, "tokens_2": item_2}
+
+        return d_results
+
+    @staticmethod
     def longest_common_phrase(tokens_1: List[str],
                               tokens_2: List[str]) -> Optional[List[str]]:
         """ Find the Longest Common Phrase in Tokens-2 relative to Tokens-1
