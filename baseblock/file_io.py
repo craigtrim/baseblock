@@ -404,6 +404,34 @@ class FileIO(object):
         return len(FileIO.load_files(directory, extension))
 
     @staticmethod
+    def delete_files(directory: str,
+                     extension: str,
+                     limit: int = None,
+                     blacklist: list = None,
+                     recursive: bool = False) -> list:
+        """ Delete Files from a directory
+
+        Args:
+            directory (str): the absolute and qualified directory path
+            extension (str): the file extension to delete
+            recursive (bool, optional): deletes files recursively if set to True. Defaults to False.
+            limit (int, optional): The number of files to deletes. Defaults to None.
+            blacklist (list, optional): an list of File Names to exclude. Defaults to None.
+
+        Returns:
+            list: list of files deleted
+        """
+        files = FileIO.load_files(directory=directory,
+                                  extension=extension,
+                                  limit=limit,
+                                  blacklist=blacklist,
+                                  recursive=recursive)
+
+        [os.remove(x) for x in files]
+
+        return files
+
+    @staticmethod
     def load_files(directory: str,
                    extension: str,
                    limit: int = None,
