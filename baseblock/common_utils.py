@@ -14,6 +14,12 @@ def odds_of(odds: int) -> bool:
     Returns:
         True: if a True value is selected
     """
+
+    if odds == 0:
+        return False
+    if odds == 100:
+        return True
+
     from random import randint
 
     MIN = 1
