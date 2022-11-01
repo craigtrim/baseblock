@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from pprint import pprint
 from typing import Generator
@@ -76,5 +77,5 @@ def main():
     test_yield_lines()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

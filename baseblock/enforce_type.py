@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
 from pprint import pprint
@@ -19,10 +18,10 @@ class DataTypeNotExpectedError(Exception):
                  actual_value: str,
                  expected_type: object):
         message = '\n'.join([
-            "Data Type Not Expected",
-            f"\tActual Value: {expected_type}",
-            f"\tActual Type: {type(actual_value)}",
-            f"\tExpected Type: {expected_type}"])
+            'Data Type Not Expected',
+            f'\tActual Value: {expected_type}',
+            f'\tActual Type: {type(actual_value)}',
+            f'\tExpected Type: {expected_type}'])
         super().__init__(message)
 
 
@@ -38,9 +37,9 @@ class ContentNotExpectedError(Exception):
                  actual_content: str,
                  expected_content: object):
         message = '\n'.join([
-            "Data Content Not Expected",
-            f"\tExpected Content: {actual_content}",
-            f"\tActual Content: {type(expected_content)}"])
+            'Data Content Not Expected',
+            f'\tExpected Content: {actual_content}',
+            f'\tActual Content: {type(expected_content)}'])
         super().__init__(message)
 
 

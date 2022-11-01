@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 MIT License
 
@@ -63,7 +64,7 @@ class Stopwatch:
     def __str__(self):
         time = self.duration * 1000
         if time >= 1000:
-            return "{:.2f}s".format(time / 1000)
+            return '{:.2f}s'.format(time / 1000)
         if time >= 1:
-            return "{:.2f}ms".format(time)
-        return "{:.2f}μs".format(time * 1000)
+            return '{:.2f}ms'.format(time)
+        return '{:.2f}μs'.format(time * 1000)

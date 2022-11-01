@@ -4,13 +4,30 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
     hooks:
-      - id: trailing-whitespace
+      - id: check-ast
+      - id: check-case-conflict
       - id: check-yaml
       - id: check-added-large-files
       - id: end-of-file-fixer
       - id: check-toml
-      # - id: name-tests-test
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: "" # Use the sha / tag you want to point at
-    hooks:
-      - id: autopep8
+      - id: check-merge-conflict
+      - id: check-docstring-first
+      - id: check-json
+      - id: debug-statements
+      - id: double-quote-string-fixer
+      - id: requirements-txt-fixer
+      - id: detect-private-key
+      - id: detect-aws-credentials
+      - id: fix-encoding-pragma
+
+      # 2022101;  fails without explanation
+      # id: trailing-whitespace
+
+      # 2022101;  fails on 'tests/test_dir/sub_dir_2' etc
+      # id: name-tests-test
+
+  # 20221101;   the pass/fail condition appears random
+  # - repo: https://github.com/pre-commit/mirrors-autopep8
+  #   rev: "v2.0.0" # Use the sha / tag you want to point at
+  #   hooks:
+  #     - id: autopep8

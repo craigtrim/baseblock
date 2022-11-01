@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """ Crytography Base Functions """
 
 
@@ -10,7 +9,7 @@ from typing import Optional
 from cryptography.fernet import Fernet
 from cryptography.fernet import InvalidToken
 
-enc = "utf-8"
+enc = 'utf-8'
 
 
 class CryptoBase(object):
@@ -120,18 +119,18 @@ class CryptoBase(object):
 
 def main(param1, param2):
     def _action():
-        if param1 == "encrypt":
+        if param1 == 'encrypt':
             return CryptoBase().encrypt_str(param2)
-        elif param1 == "decrypt":
+        elif param1 == 'decrypt':
             return CryptoBase().decrypt_str(param2)
         else:
-            raise NotImplementedError("\n".join([
-                "Unknown Param: {}".format(param1)]))
+            raise NotImplementedError('\n'.join([
+                'Unknown Param: {}'.format(param1)]))
 
     print(_action())
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import plac
 
     plac.call(main)

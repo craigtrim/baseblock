@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .env_io import EnvIO
 from .file_io import FileIO
 from .stopwatch import Stopwatch

@@ -1,7 +1,7 @@
 # Full path of the file
 $file = 'setup.py'
 $ProjectName = "baseblock"
-$ProjectVersion = "0.1.31"
+$ProjectVersion = "0.1.37"
 
 # remove the file if it exists
 if (Test-Path -Path $file -PathType Leaf) {

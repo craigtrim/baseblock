@@ -1,10 +1,10 @@
 attrs @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/bf/fd/53/6927ac12e590ef2986b1e51f62c58cda747852babd092046f73aadc943/attrs-22.1.0-py2.py3-none-any.whl
 autopep8 @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/99/fa/8e/112982d07bedbc9f4184629dd998ac5b3cb0a01cdee98ded03128c72bc/autopep8-1.6.0-py2.py3-none-any.whl
-baseblock==0.1.36
+baseblock==0.1.37
 cffi @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/7d/26/a2/6695b21ce04407fbecceb61a88eaae991c2069deb1f071d3de97929651/cffi-1.15.1-cp38-cp38-win_amd64.whl
 cfgv @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/07/9a/ee/962c2dab45907e4fd1a13afc30753a15fe678f1dcf2c862a9794ed748b/cfgv-3.3.1-py2.py3-none-any.whl
 colorama @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/5d/f1/8c/c1c1952a392eb2dff9d3654deb2b438418fab27dd8d7b0e3845d63c93b/colorama-0.4.6-py2.py3-none-any.whl
-cryptography @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/01/69/ae/c4f317f903638a99a1a679bab215d7c169a09349c866155ebb6e22c7cd/cryptography-37.0.4-cp36-abi3-win_amd64.whl
+cryptography @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/65/2a/4c/f6717081acbec78b21d75e841e83618840e754e5739f8b67364de0f8e3/cryptography-38.0.1-cp36-abi3-win_amd64.whl
 distlib @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/39/da/c3/ab17b81e190e93caf2917bf84aeb94d0f40def8ab957f0d40534680d78/distlib-0.3.6-py2.py3-none-any.whl
 entrypoints @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/e1/87/5c/599600a1c57c18ae8d12a6b599957cfbe1667774faa8167ca7c152c988/entrypoints-0.4-py3-none-any.whl
 exceptiongroup @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/9d/58/84/dcbd7cff9a9e21313d4d800a57f512933dc4a55721f84ec24a82b75c0a/exceptiongroup-1.0.0-py3-none-any.whl

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from baseblock import flatten_list
 
 
@@ -23,5 +24,5 @@ def main():
     test_flatten_list()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """ Text Matcher Class """
 
 
@@ -28,15 +27,15 @@ class TextMatcher(object):
         if value == input_text:
             return True
 
-        match_lr = f" {value} "
+        match_lr = f' {value} '
         if match_lr in input_text:
             return True
 
-        match_l = f" {value}"
+        match_l = f' {value}'
         if input_text.endswith(match_l):
             return True
 
-        match_r = f"{value} "
+        match_r = f'{value} '
         if input_text.startswith(match_r):
             return True
 
@@ -70,17 +69,17 @@ class TextMatcher(object):
 
         original_text = input_text
 
-        match_lr = f" {old_value} "
+        match_lr = f' {old_value} '
         if match_lr in input_text:
-            input_text = input_text.replace(match_lr, f" {new_value} ")
+            input_text = input_text.replace(match_lr, f' {new_value} ')
 
-        match_l = f" {old_value}"
+        match_l = f' {old_value}'
         if input_text.endswith(match_l):
-            input_text = input_text.replace(match_l, f" {new_value}")
+            input_text = input_text.replace(match_l, f' {new_value}')
 
-        match_r = f"{old_value} "
+        match_r = f'{old_value} '
         if input_text.startswith(match_r):
-            input_text = input_text.replace(match_r, f"{new_value} ")
+            input_text = input_text.replace(match_r, f'{new_value} ')
 
         if recursive and original_text != input_text:
             return TextMatcher.replace(
@@ -113,16 +112,16 @@ class TextMatcher(object):
         if value == input_text:
             return 0, len(value)
 
-        match_lr = f" {value} "
+        match_lr = f' {value} '
         if match_lr in input_text:
             x = input_text.index(match_lr)
             return x + 1, x + len(value) + 1
 
-        match_l = f" {value}"
+        match_l = f' {value}'
         if input_text.endswith(match_l):
             return len(input_text) - len(value), len(input_text)
 
-        match_r = f"{value} "
+        match_r = f'{value} '
         if input_text.startswith(match_r):
             return 0, len(value)
 

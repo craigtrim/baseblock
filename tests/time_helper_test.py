@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from baseblock import Enforcer
 from baseblock import TimeHelper
 
@@ -23,5 +24,5 @@ def main():
     test_ts_to_dict()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

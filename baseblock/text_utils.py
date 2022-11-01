@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """ Text Utility Methods: Common Functions without Special Libraries """
 
 
@@ -159,14 +158,14 @@ class TextUtils(object):
             for item_2 in [' '.join(x) for x in t2]:
 
                 if item_1 == item_2:
-                    return {100: {"tokens_1": item_1, "tokens_2": item_2}}
+                    return {100: {'tokens_1': item_1, 'tokens_2': item_2}}
 
                 score = TextUtils.jaccard_similarity(item_1, item_2)
                 if debug:
-                    print(f"({item_1}) vs. ({item_2}) = {score}")
+                    print(f'({item_1}) vs. ({item_2}) = {score}')
 
                 if score >= score_threshold:
-                    d_results[score] = {"tokens_1": item_1, "tokens_2": item_2}
+                    d_results[score] = {'tokens_1': item_1, 'tokens_2': item_2}
 
         return d_results
 
@@ -257,7 +256,7 @@ class TextUtils(object):
             return True
 
         cat = category(char)
-        if cat.startswith("P"):
+        if cat.startswith('P'):
             return True
 
         return False
@@ -308,15 +307,15 @@ class TextUtils(object):
         """
 
         def exists(item_1: str, item_2: str) -> bool:
-            token_lr = f" {item_1} "
+            token_lr = f' {item_1} '
             if token_lr in item_2:
                 return True
 
-            token_l = f" {item_1}"
+            token_l = f' {item_1}'
             if item_2.endswith(token_l):
                 return True
 
-            token_r = f"{item_1} "
+            token_r = f'{item_1} '
             if item_2.startswith(token_r):
                 return True
 
@@ -593,8 +592,8 @@ class TextUtils(object):
 
             def an() -> str:
                 if tokens[i].isupper():
-                    return "An"
-                return "an"
+                    return 'An'
+                return 'an'
 
             if use_an():
                 results.append(an())
@@ -656,7 +655,7 @@ class TextUtils(object):
                 'The quick brown fox jumped over the lazy dog'
         """
         def case(value: str) -> str:
-            return f"{value[:1].upper()}{value[1:]}"
+            return f'{value[:1].upper()}{value[1:]}'
 
         if ' ' not in input_text:
             return case(input_text)
@@ -691,7 +690,7 @@ class TextUtils(object):
                 'The Quick Brown Fox Jumped Over the Lazy Dog'
         """
         def case(value: str) -> str:
-            return f"{value[:1].upper()}{value[1:]}"
+            return f'{value[:1].upper()}{value[1:]}'
 
         def conditional_case(value: str) -> str:
             if value.lower().strip() in STOPWORDS:

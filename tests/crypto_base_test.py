@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from baseblock import CryptoBase
 
 
@@ -5,7 +6,7 @@ def test_component():
 
     crypt = CryptoBase()
 
-    input_text = "This is only a drill."
+    input_text = 'This is only a drill.'
     x = crypt.encrypt_str(input_text)
     y = crypt.decrypt_str(x)
 
@@ -16,5 +17,5 @@ def main():
     test_component()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

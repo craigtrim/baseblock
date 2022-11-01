@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from mimetypes import common_types
 from baseblock import TextUtils
 
-input_text = "the quick brown fox jumped over the lazy dog"
+input_text = 'the quick brown fox jumped over the lazy dog'
 
 
 def test_most_similar_phrase_1():
@@ -103,7 +104,7 @@ def test_remove_duplicated_phrases():
 
     text_1 = "The earliest known age of fossils is 3.7 billion years old. Some would argue that life arose within a few hundred million years of Earth's origin, perhaps as early as 4.2 billion years ago, but the violent bombardment and geological activity of Earth's first few hundred million years have obliterated any firm evidence of such early life. Nevertheless, even the 3.7 - billion - year age of the earliest fossils shows that life has been a feature of Planet Earth for most of its history."
 
-    text_2 = "The earliest known age of fossils is 3.7 billion years old."
+    text_2 = 'The earliest known age of fossils is 3.7 billion years old.'
 
     text_1 = TextUtils.remove_duplicated_phrases(
         text_1=text_1,
@@ -148,9 +149,9 @@ def test_title_case():
     assert result
     assert type(result) == str
 
-    assert result == "The Quick Brown Fox Jumped Over the Lazy Dog"
+    assert result == 'The Quick Brown Fox Jumped Over the Lazy Dog'
 
-    assert TextUtils.title_case("IBM") == "IBM"
+    assert TextUtils.title_case('IBM') == 'IBM'
 
 
 def test_sentence_case():
@@ -160,7 +161,7 @@ def test_sentence_case():
     assert result
     assert type(result) == str
 
-    assert result == "The quick brown fox jumped over the lazy dog"
+    assert result == 'The quick brown fox jumped over the lazy dog'
 
 
 def test_lower_case():
@@ -170,21 +171,21 @@ def test_lower_case():
     assert result
     assert type(result) == str
 
-    assert result == "the quick brown fox jumped over the lazy dog"
+    assert result == 'the quick brown fox jumped over the lazy dog'
 
 
 def test_update_determiners():
     assert TextUtils.update_determiners(
-        "this is a umbrella") == "this is an umbrella"
+        'this is a umbrella') == 'this is an umbrella'
 
     assert TextUtils.update_determiners(
-        "a incredible contributor") == "an incredible contributor"
+        'a incredible contributor') == 'an incredible contributor'
 
     assert TextUtils.update_determiners(
         'Such a "Insanely Productive" work ethic') == 'Such an "Insanely Productive" work ethic'
 
     assert TextUtils.update_determiners(
-        "A incredible contributor") == "An incredible contributor"
+        'A incredible contributor') == 'An incredible contributor'
 
 
 def test_subsumes():
@@ -242,5 +243,5 @@ def main():
     test_most_similar_phrase_2()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from statistics import mean
 
 
@@ -16,7 +17,7 @@ def driver(odds: int):
                 ctr += 1
         results.append(ctr)
 
-    print(f"Result: odds={odds}% and {mean(results)}")
+    print(f'Result: odds={odds}% and {mean(results)}')
 
 
 def main():
@@ -30,5 +31,5 @@ def main():
     driver(80)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """ File Input/Output Utility Methods """
 
 
@@ -40,11 +39,11 @@ class FileIO(object):
         Returns:
             str: absolute Path to a Local Directory
         """
-        if platform == "linux" or platform == "linux2":
+        if platform == 'linux' or platform == 'linux2':
             return os.environ['HOME']
-        elif platform == "darwin":
+        elif platform == 'darwin':
             return os.environ['HOME']
-        elif platform == "win32":
+        elif platform == 'win32':
             return os.environ['APPDATA']
         raise NotImplementedError(platform)
 
@@ -114,13 +113,13 @@ class FileIO(object):
         if _type not in [dict, list, str]:
             raise NotImplementedError(_type)
 
-        path = FileIO.join(FileIO.local_directory(), "temp.json")
+        path = FileIO.join(FileIO.local_directory(), 'temp.json')
         if _type == str:
             FileIO.write_string(data, path)
         else:
             FileIO.write_json(data, path)
 
-        print(f"Wrote File to {path}")
+        print(f'Wrote File to {path}')
         return path
 
     @staticmethod
@@ -195,7 +194,7 @@ class FileIO(object):
         """
         file_path = os.path.join(os.environ['DESKTOP'], 'temp.json')
         FileIO.write_json(data, file_path=file_path)
-        raise ValueError(f"Wrote Temp File: {file_path}")
+        raise ValueError(f'Wrote Temp File: {file_path}')
 
     @staticmethod
     def write_image(data: object,
@@ -218,7 +217,7 @@ class FileIO(object):
             data (object): the JSON object
             file_path (str): the absolute and qualified output file path
         """
-        with io_open(file_path, "w") as json_file:
+        with io_open(file_path, 'w') as json_file:
             json_dump = json_dumps(data,
                                    indent=4,
                                    sort_keys=False,
@@ -241,7 +240,7 @@ class FileIO(object):
 
     @staticmethod
     def read_string(file_path: str,
-                    encoding: str = "utf-8",
+                    encoding: str = 'utf-8',
                     replace_newlines: bool = False) -> str:
         """ Read String from File
 
@@ -260,7 +259,7 @@ class FileIO(object):
     @staticmethod
     def write_string(input_text: str,
                      file_path: str,
-                     file_encoding: str = "utf-8") -> None:
+                     file_encoding: str = 'utf-8') -> None:
         """ Write String to File
 
         Args:
@@ -275,7 +274,7 @@ class FileIO(object):
             raise ValueError
 
         target = codecs_open(file_path,
-                             mode="w",
+                             mode='w',
                              encoding=file_encoding)
 
         target.write(input_text)
@@ -284,7 +283,7 @@ class FileIO(object):
     @staticmethod
     def write_lines(lines: list,
                     file_path: str,
-                    file_encoding: str = "utf-8") -> None:
+                    file_encoding: str = 'utf-8') -> None:
         """ Write Lines to File
 
         Args:
@@ -340,11 +339,11 @@ class FileIO(object):
             try:
                 return yaml_load(stream, Loader)
             except YAMLError:
-                raise ValueError(f"Invalid YAML File: {file_path}")
+                raise ValueError(f'Invalid YAML File: {file_path}')
 
     @staticmethod
     def read_lines(file_path: str,
-                   file_encoding: str = "utf-8") -> list:
+                   file_encoding: str = 'utf-8') -> list:
         """ Read Lines of a File into a List
 
         Args:
@@ -355,16 +354,16 @@ class FileIO(object):
             list: each line in the file as a list
         """
         target = codecs_open(file_path,
-                             mode="r",
+                             mode='r',
                              encoding=file_encoding)
-        lines = [x.replace("\n", "").strip() for x in target.readlines() if x]
+        lines = [x.replace('\n', '').strip() for x in target.readlines() if x]
         target.close()
 
         return lines
 
     @staticmethod
     def yield_lines(file_path: str,
-                    file_encoding: str = "utf-8") -> list:
+                    file_encoding: str = 'utf-8') -> list:
         """Read Lines of a File using a yield Generator
 
         Args:
@@ -385,7 +384,7 @@ class FileIO(object):
             Notes:
                 each output line is a list with one element that requires independent delimitation
         """
-        with codecs_open(file_path, mode="r", encoding=file_encoding) as f:
+        with codecs_open(file_path, mode='r', encoding=file_encoding) as f:
             for line in csv_reader(f):
                 yield line
 
@@ -516,7 +515,7 @@ class FileIO(object):
         exclude_sub = []
         for sub_folder in exclude:
             if os.path.sep not in sub_folder:
-                exclude_sub.append(f"{os.path.sep}{sub_folder}{os.path.sep}")
+                exclude_sub.append(f'{os.path.sep}{sub_folder}{os.path.sep}')
             else:
                 exclude_sub.append(sub_folder)
 
@@ -573,7 +572,7 @@ class FileIO(object):
         exclude_sub = []
         for sub_folder in exclude:
             if os.path.sep not in sub_folder:
-                exclude_sub.append(f"{os.path.sep}{sub_folder}{os.path.sep}")
+                exclude_sub.append(f'{os.path.sep}{sub_folder}{os.path.sep}')
             else:
                 exclude_sub.append(sub_folder)
 
@@ -632,7 +631,7 @@ class FileIO(object):
         try:
             return yaml_load(StringIO(file_data), Loader)
         except YAMLError:
-            raise ValueError("Invalid YAML Data")
+            raise ValueError('Invalid YAML Data')
 
     @staticmethod
     def parse_json(file_data: str) -> dict:
@@ -657,4 +656,4 @@ class FileIO(object):
             return json_loads(file_data)
 
         except JSONDecodeError:
-            raise ValueError("Invalid JSON Data")
+            raise ValueError('Invalid JSON Data')
