@@ -21,6 +21,7 @@ install:
 	poetry lock
 	poetry update
 	poetry install
+	poetry run pre-commit install
 
 activate:
 	@echo Activating Microservice

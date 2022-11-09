@@ -4,6 +4,8 @@
 
 import os
 
+from typing import List
+
 
 class EnvIO(object):
     """ Environment Variable Utility Methods """
@@ -73,7 +75,7 @@ class EnvIO(object):
     @staticmethod
     def int_or_default(env_var: str,
                        default: int) -> int:
-        """Retrieve Environment Variable by Name or return default
+        """Retrieve Environment Variable by Name or return a default value
 
         Args:
             env_var (str): the Environment Variable name
@@ -90,7 +92,7 @@ class EnvIO(object):
     @staticmethod
     def str_or_default(env_var: str,
                        default: str) -> str:
-        """Retrieve Environment Variable by Name or return default
+        """Retrieve Environment Variable by Name or return a default value
 
         Args:
             env_var (str): the Environment Variable name
@@ -119,69 +121,73 @@ class EnvIO(object):
         raise ValueError(env_var)
 
     @staticmethod
-    def as_list(env_var: str,
+    def as_list(*args,
                 lower: bool = True) -> list:
         """Retrieve Environment Variable as a tokenized value to list
 
         Args:
-            env_var (str): the Environment Variable name
+            args (str): a list of one-or-more Environment Variable names
 
         Returns:
             str or None: a list representation of the values
         """
-        if env_var in os.environ:
-            values = [x.strip() for x in os.environ[env_var].split(',')]
-            values = [x for x in values if x and len(x)]
-            if lower:
-                values = [x.lower() for x in values]
-            return values
+        for env_var in args:
+            if env_var in os.environ:
+                values = [x.strip() for x in os.environ[env_var].split(',')]
+                values = [x for x in values if x and len(x)]
+                if lower:
+                    values = [x.lower() for x in values]
+                return values
 
         return []
 
     @staticmethod
-    def as_str(env_var: str) -> str or None:
+    def as_str(*args) -> str or None:
         """Retrieve Environment Variable as a string value
 
         Args:
-            env_var (str): the Environment Variable name
+            args (str): a list of one-or-more Environment Variable names
 
         Returns:
             str or None: a String representation of the value
         """
-        if env_var in os.environ:
-            return str(os.environ[env_var])
+        for env_var in args:
+            if env_var in os.environ:
+                return str(os.environ[env_var])
 
     @staticmethod
-    def as_int(env_var: str) -> int or None:
+    def as_int(*args) -> int or None:
         """Retrieve Environment Variable as an int value
 
         Args:
-            env_var (str): the Environment Variable name
+            args (str): a list of one-or-more Environment Variable names
 
         Returns:
             str or None: an int representation of the value
         """
-        if env_var in os.environ:
-            try:
-                return int(os.environ[env_var])
-            except ValueError:
-                pass
+        for env_var in args:
+            if env_var in os.environ:
+                try:
+                    return int(os.environ[env_var])
+                except ValueError:
+                    pass
 
     @staticmethod
-    def as_float(env_var: str) -> float or None:
+    def as_float(*args) -> float or None:
         """Retrieve Environment Variable as a float value
 
         Args:
-            env_var (str): the Environment Variable name
+            args (str): a list of one-or-more Environment Variable names
 
         Returns:
             str or None: a float representation of the value
         """
-        if env_var in os.environ:
-            try:
-                return float(os.environ[env_var])
-            except ValueError:
-                pass
+        for env_var in args:
+            if env_var in os.environ:
+                try:
+                    return float(os.environ[env_var])
+                except ValueError:
+                    pass
 
     @staticmethod
     def is_true(env_var: str) -> bool:
