@@ -23,20 +23,21 @@ class EnvIO(object):
         return env_var in os.environ and len(os.environ[env_var])
 
     @staticmethod
-    def float_or_exception(env_var: str) -> float:
+    def float_or_exception(*args) -> float:
         """Retrieve Environment Variable by Name or throw exception
 
         Args:
-            env_var (str): the Environment Variable name
+            args (list): a list of Environment Variable names
 
         Raises:
-            ValueError: the Environment Variable was not found
+            ValueError: none of the Environment Variables were not found
 
         Returns:
-            float: the Environment Variable value
+            str: the first Environment Variable value to be found
         """
-        if EnvIO.exists(env_var):
-            return EnvIO.as_float(env_var)
+        for env_var in args:
+            if EnvIO.exists(env_var):
+                return EnvIO.as_float(env_var)
         raise ValueError(env_var)
 
     @staticmethod
@@ -56,20 +57,21 @@ class EnvIO(object):
         raise default
 
     @staticmethod
-    def int_or_exception(env_var: str) -> int:
+    def int_or_exception(*args) -> int:
         """Retrieve Environment Variable by Name or throw exception
 
         Args:
-            env_var (str): the Environment Variable name
+            args (list): a list of Environment Variable names
 
         Raises:
-            ValueError: the Environment Variable was not found
+            ValueError: none of the Environment Variables were not found
 
         Returns:
-            int: the Environment Variable value
+            str: the first Environment Variable value to be found
         """
-        if EnvIO.exists(env_var):
-            return EnvIO.as_int(env_var)
+        for env_var in args:
+            if EnvIO.exists(env_var):
+                return EnvIO.as_int(env_var)
         raise ValueError(env_var)
 
     @staticmethod
@@ -104,21 +106,23 @@ class EnvIO(object):
         return os.environ.get(env_var, default)
 
     @staticmethod
-    def str_or_exception(env_var: str) -> str:
+    def str_or_exception(*args) -> str:
         """Retrieve Environment Variable by Name or throw exception
 
         Args:
-            env_var (str): the Environment Variable name
+            args (list): a list of Environment Variable names
 
         Raises:
-            ValueError: the Environment Variable was not found
+            ValueError: none of the Environment Variables were not found
 
         Returns:
-            str: the Environment Variable value
+            str: the first Environment Variable value to be found
         """
-        if EnvIO.exists(env_var):
-            return EnvIO.as_str(env_var)
-        raise ValueError(env_var)
+        for env_var in args:
+            if EnvIO.exists(env_var):
+                return EnvIO.as_str(env_var)
+
+        raise ValueError(args)
 
     @staticmethod
     def as_list(*args,
