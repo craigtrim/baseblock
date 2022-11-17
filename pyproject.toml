@@ -24,7 +24,7 @@ classifiers = [
 [tool.poetry.dependencies]
 PyYAML = "6.0" # 20221101; Last Verified
 cryptography = "38.0.1" # 20221101; Last Updated
-python = "3.8.5" 
+python = "^3.8.5" 
 unicodedata2 = "*" 
 
 [tool.poetry.dev-dependencies]
