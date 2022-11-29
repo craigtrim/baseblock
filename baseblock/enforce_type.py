@@ -3,6 +3,8 @@
 
 from pprint import pprint
 
+from typing import Callable
+
 from collections import defaultdict
 
 
@@ -223,6 +225,66 @@ class Enforcer(object):
 
         if display:
             pprint(value)
+
+    @classmethod
+    def _is_dict_of_list_of_type(cls,
+                                 value: object,
+                                 list_of_type: Callable,
+                                 display: bool = False) -> None:
+        if type(value) not in [dict, defaultdict]:
+            raise DataTypeNotExpectedError(actual_value=value,
+                                           expected_type='dict')
+
+        for k in value:
+            list_of_type(value[k])
+
+        if display:
+            pprint(value)
+
+    @classmethod
+    def is_dict_of_list_of_strs(cls,
+                                value: object,
+                                display: bool = False) -> None:
+        return cls._is_dict_of_list_of_type(
+            value=value,
+            list_of_type=cls.is_list_of_str,
+            display=display)
+
+    @classmethod
+    def is_dict_of_list_of_floats(cls,
+                                  value: object,
+                                  display: bool = False) -> None:
+        return cls._is_dict_of_list_of_type(
+            value=value,
+            list_of_type=cls.is_list_of_float,
+            display=display)
+
+    @classmethod
+    def is_dict_of_list_of_ints(cls,
+                                value: object,
+                                display: bool = False) -> None:
+        return cls._is_dict_of_list_of_type(
+            value=value,
+            list_of_type=cls.is_list_of_int,
+            display=display)
+
+    @classmethod
+    def is_dict_of_list_of_tuples(cls,
+                                  value: object,
+                                  display: bool = False) -> None:
+        return cls._is_dict_of_list_of_type(
+            value=value,
+            list_of_type=cls.is_list_of_tuples,
+            display=display)
+
+    @classmethod
+    def is_dict_of_list_of_dicts(cls,
+                                 value: object,
+                                 display: bool = False) -> None:
+        return cls._is_dict_of_list_of_type(
+            value=value,
+            list_of_type=cls.is_list_of_dicts,
+            display=display)
 
     @classmethod
     def is_nonempty_dict(cls,
