@@ -63,6 +63,17 @@ def test_enforcer():
         ]
     })
 
+    Enforcer.is_dict_of_list_of_typed_dicts({
+        'a': [
+            {'x': [], 'y': [], 'z': []},
+            {'x': [], 'y': [], 'z': []},
+        ],
+        'b': [
+            {'x': [], 'y': [], 'z': []},
+            {'x': [], 'y': [], 'z': []},
+        ]
+    }, ['x', 'y', 'z'])
+
 
 def main():
     test_enforcer()

@@ -3,6 +3,7 @@
 
 from pprint import pprint
 
+from typing import List
 from typing import Callable
 
 from collections import defaultdict
@@ -216,9 +217,7 @@ class Enforcer(object):
     def is_dict_of_lists(cls,
                          value: object,
                          display: bool = False) -> None:
-        if type(value) not in [dict, defaultdict]:
-            raise DataTypeNotExpectedError(actual_value=value,
-                                           expected_type='dict')
+        cls.is_dict(value)
 
         for k in value:
             cls.is_list(value[k])
@@ -231,9 +230,7 @@ class Enforcer(object):
                                  value: object,
                                  list_of_type: Callable,
                                  display: bool = False) -> None:
-        if type(value) not in [dict, defaultdict]:
-            raise DataTypeNotExpectedError(actual_value=value,
-                                           expected_type='dict')
+        cls.is_dict(value)
 
         for k in value:
             list_of_type(value[k])
@@ -285,6 +282,30 @@ class Enforcer(object):
             value=value,
             list_of_type=cls.is_list_of_dicts,
             display=display)
+
+    @classmethod
+    def is_dict_of_list_of_typed_dicts(cls,
+                                       value: object,
+                                       keys: List[str],
+                                       display: bool = False) -> None:
+
+        cls.is_dict(value)
+        cls.is_list_of_str(keys)
+        keys = sorted(keys)
+
+        for k in value:
+
+            cls.is_list_of_dicts(value[k])
+            for list_item in value[k]:
+
+                actual_keys = sorted(list_item.keys())
+                if actual_keys != keys:
+                    raise ContentNotExpectedError(
+                        actual_content=actual_keys,
+                        expected_content=keys)
+
+        if display:
+            pprint(value)
 
     @classmethod
     def is_nonempty_dict(cls,
