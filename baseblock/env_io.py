@@ -203,11 +203,11 @@ class EnvIO(object):
 
     @staticmethod
     def set_true(env_var: str) -> None:
-        os.environ[env_var] = True
+        os.environ[env_var] = str(True)
 
     @staticmethod
     def set_false(env_var: str) -> None:
-        os.environ[env_var] = False
+        os.environ[env_var] = str(False)
 
     @staticmethod
     def exists_as_true(env_var: str) -> bool:
