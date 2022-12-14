@@ -32,6 +32,35 @@ class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
     @staticmethod
+    def is_equal(text_1: str,
+                 text_2: str,
+                 case_sensitive: bool = False) -> bool:
+        """ Compare Two Complex Strings for Hash Equality
+
+        Args:
+            text_1 (str): any input text of any length or format
+            text_2 (str): any input text of any length or format
+            case_sensitive (bool, optional): Will ignore case qualifications if True. Defaults to False.
+
+        Returns:
+            bool: True if the strings are equal
+        """
+
+        # try a simple equality op first
+        if hash(text_1) == hash(text_2):
+            return True
+
+        def cleanse(input_text: str) -> str:
+            if not case_sensitive:
+                input_text = input_text.lower()
+            for ch in ['\n', '\r', '\t', ' ']:
+                while ch in input_text:
+                    input_text = input_text.replace(ch, '').strip()
+            return input_text.strip()
+
+        return hash(cleanse(text_1)) == hash(cleanse(text_2))
+
+    @staticmethod
     def remove_duplicated_phrases(text_1: str,
                                   text_2: str) -> str:
         """ Remove Duplicated Phrases

@@ -5,6 +5,43 @@ from baseblock import TextUtils
 input_text = 'the quick brown fox jumped over the lazy dog'
 
 
+def test_is_equal():
+    input_1 = """
++----+----------+--------------------------+--------------+
+|    | Parent   | Child                    | Confidence   |
+|----+----------+--------------------------+--------------|
+|  0 | network  | mitchellusatoday network |              |
+|  1 | platform | people's platform        |              |
+|  2 | deal     | new deal                 |              |
+|  3 | new deal | green new deal           |              |
+|  4 | discus   | article discus           |              |
+|  5 | energy   | green energy             |              |
++----+----------+--------------------------+--------------+
+    """
+
+    input_2 = """
+            +----+----------+--------------------------+--------------+
+            |    | Parent   | Child                    | Confidence   |
+            |----+----------+--------------------------+--------------|
+
+            |  0 | network  | mitchellusatoday network |              |
+            |  1 | platform | people's platform        |              |
+
+            |  2 | deal     | new deal                 |              |
+            |  3 | new deal | green new deal           |              |
+
+            |  4 | discus   | article discus           |              |
+            |  5 | energy   | green energy             |              |
+            +----+----------+--------------------------+--------------+
+    """.strip()
+
+    assert TextUtils.is_equal(input_1, input_2)
+
+    # sanity checks
+    assert TextUtils.is_equal(input_1, input_1)
+    assert TextUtils.is_equal(input_2, input_2)
+
+
 def test_most_similar_phrase_1():
 
     tokens_1 = ['where', 'can', 'I', 'find', 'the', 'library']
@@ -240,7 +277,7 @@ def test_remove_punctuation():
 
 
 def main():
-    test_most_similar_phrase_2()
+    test_is_equal()
 
 
 if __name__ == '__main__':

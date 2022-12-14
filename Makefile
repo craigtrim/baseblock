@@ -43,11 +43,6 @@ linters:
 	poetry run pre-commit run --all-files
 	poetry run flakeheaven lint
 
-pyc:
-	@echo Compiling Python Code
-	poetry run python -c "import compileall; compileall.compile_dir('baseblock', optimize=2, force=True, legacy=True)"
-	poetry run python -c "import compileall; compileall.compile_dir('baseblock', optimize=2, force=True, legacy=False)"
-
 freeze:
 	@echo Freezing Requirements
 	poetry run pip freeze > requirements.txt
@@ -56,6 +51,5 @@ freeze:
 all:
 	make build
 	make linters
-	make pyc
 	make freeze
 	make copy_setup
