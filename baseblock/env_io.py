@@ -54,7 +54,7 @@ class EnvIO(object):
         """
         if EnvIO.exists(env_var):
             return EnvIO.as_float(env_var)
-        raise default
+        return default
 
     @staticmethod
     def int_or_exception(*args) -> int:
