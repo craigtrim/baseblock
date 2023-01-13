@@ -30,6 +30,21 @@ class FileIO(object):
     """ File Input/Output Utility Methods """
 
     @staticmethod
+    def is_empty_folder(folder_name: str) -> bool:
+        """ Check if a Folder is Empty of Contents
+
+        Args:
+            folder_name (str): a fully qualified path to a folder
+
+        Returns:
+            bool: True if the folder has no contents
+        """
+        if FileIO.exists(folder_name):
+            if len(os.listdir(folder_name)):
+                return False
+        return True
+
+    @staticmethod
     def local_directory() -> str:
         """ Retrieve a Platform Specific Local Directory
 

@@ -309,7 +309,11 @@ class TextUtils(object):
             if not TextUtils.is_punctuation(ch):
                 buffer.append(ch)
 
-        return ''.join(buffer)
+        result = ''.join(buffer)
+        while '  ' in result:
+            result = result.replace('  ', ' ')
+
+        return result.strip()
 
     @ staticmethod
     def find_subsumed_tokens(tokens: list) -> list:

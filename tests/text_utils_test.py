@@ -273,7 +273,7 @@ def test_remove_punctuation():
         'alpha...beta gamma') == 'alphabeta gamma'
 
     assert TextUtils.remove_punctuation(
-        'alpha ... beta gamma') == 'alpha  beta gamma'
+        'alpha ... beta gamma') == 'alpha beta gamma'
 
 
 def main():
