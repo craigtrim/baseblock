@@ -8,7 +8,7 @@ from io import StringIO
 from io import open as io_open
 
 from csv import reader as csv_reader
-from typing import Generator
+from typing import Optional
 
 from sys import platform
 from pathlib import Path
@@ -444,6 +444,30 @@ class FileIO(object):
         [os.remove(x) for x in files]
 
         return files
+
+    @staticmethod
+    def count_files(directory: str,
+                    extension: str,
+                    recursive: bool = False) -> Optional[int]:
+        """ Count Files in a directory
+
+        Args:
+            directory (str): the absolute and qualified directory path
+            extension (str): the file extension to load
+            recursive (bool, optional): loads files recursively if set to True. Defaults to False.
+
+        Returns:
+            Optional[int]: the total files (0..*)
+                if the directory does not exist, return None
+        """
+        if not FileIO.exists(directory):
+            return None
+
+        return len(FileIO.load_files(directory=directory,
+                                     extension=extension,
+                                     limit=None,
+                                     blacklist=None,
+                                     recursive=recursive))
 
     @staticmethod
     def load_files(directory: str,
