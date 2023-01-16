@@ -276,8 +276,22 @@ def test_remove_punctuation():
         'alpha ... beta gamma') == 'alpha beta gamma'
 
 
+def test_chunk_list():
+
+    assert TextUtils.chunk_list([
+        'input sentence 1',
+        'input sentence 2',
+        'input sentence 3',
+        'input sentence 4',
+        'input sentence 5',
+    ], max_chunk_size=50) == [
+        'input sentence 1  input sentence 2  input sentence 3  input sentence 4',
+        'input sentence 5'
+    ]
+
+
 def main():
-    test_is_equal()
+    test_chunk_list()
 
 
 if __name__ == '__main__':

@@ -32,6 +32,56 @@ class TextUtils(object):
     """ Text Utility Methods: Common Functions without Special Libraries """
 
     @staticmethod
+    def chunk_list(input_lines: List[str],
+                   max_chunk_size: int) -> List[str]:
+        """ Rechunk a List of Strings by Size
+
+        Sample Input (5 entries):
+            [
+                input sentence 1,
+                input sentence 2,
+                input sentence 3,
+                input sentence 4,
+                input sentence 5,
+            ]
+
+        Sample Call
+            get_chunks(input_lines, 50)
+
+        Sample Output (2 entries)
+            [
+                input sentence 1 input sentence 2 input sentence 3,
+                input sentence 4 input sentence 5,
+            ]
+
+        Args:
+            input_lines (List[str]): a list of string inputs
+            max_chunk_size (int): the desired chunk size
+
+        Returns:
+            List[str]: a list of string outputs
+        """
+
+        chunks = []
+        buffer = []
+        running_total = 0
+
+        for i in range(len(input_lines)):
+
+            buffer.append(input_lines[i])
+            running_total += len(input_lines[i])
+
+            if running_total > max_chunk_size:
+                chunks.append('  '.join(buffer))
+                buffer = []
+                running_total = 0
+
+        if len(buffer):
+            chunks.append('  '.join(buffer))
+
+        return chunks
+
+    @staticmethod
     def is_equal(text_1: str,
                  text_2: str,
                  case_sensitive: bool = False) -> bool:
