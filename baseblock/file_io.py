@@ -8,6 +8,7 @@ from io import StringIO
 from io import open as io_open
 
 from csv import reader as csv_reader
+from typing import List
 from typing import Optional
 
 from sys import platform
@@ -470,19 +471,37 @@ class FileIO(object):
                                      recursive=recursive))
 
     @staticmethod
+    def list_directory(directory: str,
+                       recursive: bool = True) -> list:
+        """ Load Files from a directory
+
+        Args:
+            directory (str): the absolute and qualified directory path
+            recursive (bool, optional): loads files recursively if set to True. Defaults to True.
+
+        Returns:
+            list: list of files
+        """
+        return FileIO.load_files(directory=directory,
+                                 extension=None,
+                                 limit=None,
+                                 blacklist=None,
+                                 recursive=recursive)
+
+    @staticmethod
     def load_files(directory: str,
-                   extension: str,
-                   limit: int = None,
-                   blacklist: list = None,
+                   extension: Optional[str] = None,
+                   limit: Optional[int] = None,
+                   blacklist: Optional[List[str]] = None,
                    recursive: bool = False) -> list:
         """ Load Files from a directory
 
         Args:
             directory (str): the absolute and qualified directory path
-            extension (str): the file extension to load
+            extension (Optional[str], optional): the file extension to load. Defaults to None.
+            limit (Optional[int], optional): The number of files to load. Defaults to None.
+            blacklist (Optional[List[str]], optional): an list of File Names to exclude. Defaults to None.
             recursive (bool, optional): loads files recursively if set to True. Defaults to False.
-            limit (int, optional): The number of files to load. Defaults to None.
-            blacklist (list, optional): an list of File Names to exclude. Defaults to None.
 
         Returns:
             list: list of files
@@ -490,20 +509,29 @@ class FileIO(object):
         def non_recursive_loader() -> list:
             files = os.listdir(directory)
 
-            files = [f for f in files if f.endswith(extension)]
+            if extension:
+                files = [f for f in files if f.endswith(extension)]
+
             if limit and len(files) >= limit:
                 files = files[:limit]
 
-            files = [os.path.normpath(os.path.join(directory, f))
-                     for f in files]
+            files = [
+                os.path.normpath(os.path.join(directory, f))
+                for f in files
+            ]
 
             return files
 
         def recursive_loader() -> list:
             results = []
 
-            for dirpath, dirnames, files in os.walk(directory):
-                files = [x for x in files if x.lower().endswith(extension)]
+            for dirpath, _, files in os.walk(directory):
+
+                if extension:
+                    files = [
+                        x for x in files
+                        if x.lower().endswith(extension)
+                    ]
 
                 for name in files:
 
