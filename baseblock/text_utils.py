@@ -154,12 +154,10 @@ class TextUtils(object):
         return cartesian
 
     @staticmethod
-    def cartesian_join(matches: list) -> list:
+    def cartesian_bigrams(matches: list) -> list:
         """
         Purpose:
-            Perform a Cartesian Join
-        Time per Call:
-            0.5ms < x 1.0ms
+            Perform a Cartesian Join to create Bigram Products
         :param matches:
             a list of 1..* tokens forming a match pattern
             Sample Input:
@@ -222,14 +220,87 @@ class TextUtils(object):
                     ['People', 'Purple'],
                     ['People', 'Shoe'], 
                     ['Person', 'Purple'],
-                    ['Person', 'Shoe'], 
+                    ['Person', 'Shoe'], z
                     ['Purple', 'Shoe']
                 ]
         """
         product = TextUtils.cartesian([matches, matches])
 
         product = [x for x in product if x[0] != x[1]]
-        product = sorted(set([','.join(sorted(x, key=len)) for x in product]))
+
+        def sort_key(s): return (-len(s), s)
+
+        product = sorted(set(
+            [
+                ','.join(sorted(x, key=sort_key)) for x in product
+            ]
+        ))
+
+        product = [x.split(',') for x in product]
+
+        return product
+
+    @staticmethod
+    def cartesian_trigrams(matches: list) -> list:
+        """
+        Purpose:
+            Perform a Cartesian Join to create Bigram Products
+
+        :param matches:
+            a list of 1..* tokens forming a match pattern
+
+        Returns:
+            list: a list of trigrams
+        """
+
+        product = TextUtils.cartesian([matches, matches, matches])
+
+        product = [
+            x for x in product if
+            x[0] != x[1] and
+            x[0] != x[2] and
+            x[1] != x[2]
+        ]
+
+        def sort_key(s): return (-len(s), s)
+
+        product = sorted(set(
+            [
+                ','.join(sorted(x, key=sort_key)) for x in product
+            ]
+        ))
+
+        product = [x.split(',') for x in product]
+
+        return product
+
+    @staticmethod
+    def cartesian_quadgrams(matches: list) -> list:
+        """
+        Purpose:
+            Perform a Cartesian Join to create Bigram Products
+
+        :param matches:
+            a list of 1..* tokens forming a match pattern
+
+        Returns:
+            list: a list of trigrams
+        """
+
+        product = TextUtils.cartesian([matches, matches, matches, matches])
+
+        product = [
+            x for x in product if x[0] != x[1] and x[0] != x[2] and x[0] != x[3] and x[1] != x[2] and x[1] != x[3] and x[2] != x[3]
+        ]
+
+        def sort_key(s): return (-len(s), s)
+
+        product = sorted(set(
+            [
+                ','.join(sorted(x, key=sort_key)) for x in product
+            ]
+        ))
+
         product = [x.split(',') for x in product]
 
         return product

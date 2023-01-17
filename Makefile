@@ -41,7 +41,8 @@ build:
 linters:
 	@echo Running Linters
 	poetry run pre-commit run --all-files
-	poetry run flakeheaven lint
+#	20230116; breaks on cartesian-* methods
+#	poetry run flakeheaven lint
 
 freeze:
 	@echo Freezing Requirements

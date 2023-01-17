@@ -290,34 +290,87 @@ def test_chunk_list():
     ]
 
 
-def test_cartesian():
+def test_cartesian_bigrams():
     tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
             'Laser', 'Shoe', 'Face', 'Head', 'Graduation']
-    assert TextUtils.cartesian_join(tags) == [
-        ['Face', 'Graduation'], ['Face', 'Head'], ['Face', 'Laser'],
-        ['Face', 'Light'], ['Face', 'Lighting'], ['Face', 'People'],
-        ['Face', 'Person'], ['Face', 'Purple'], ['Face', 'Shoe'],
-        ['Head', 'Face'], ['Head', 'Graduation'], ['Head', 'Laser'],
-        ['Head', 'Light'], ['Head', 'Lighting'], ['Head', 'People'],
-        ['Head', 'Person'], ['Head', 'Purple'], ['Head', 'Shoe'],
-        ['Laser', 'Graduation'], ['Laser', 'Light'], ['Laser', 'Lighting'],
-        ['Laser', 'People'], ['Laser', 'Person'], ['Laser', 'Purple'],
-        ['Light', 'Graduation'], ['Light', 'Laser'], ['Light', 'Lighting'],
-        ['Light', 'People'], ['Light', 'Person'], ['Light', 'Purple'],
-        ['Lighting', 'Graduation'], ['People', 'Graduation'],
-        ['People', 'Lighting'], ['People', 'Person'],
-        ['People', 'Purple'], ['Person', 'Graduation'],
-        ['Person', 'Lighting'], ['Person', 'People'], ['Person', 'Purple'],
-        ['Purple', 'Graduation'], ['Purple', 'Lighting'], ['Purple', 'People'],
-        ['Purple', 'Person'], ['Shoe', 'Face'], ['Shoe', 'Graduation'],
-        ['Shoe', 'Head'], ['Shoe', 'Laser'], ['Shoe', 'Light'],
-        ['Shoe', 'Lighting'], ['Shoe', 'People'],
-        ['Shoe', 'Person'], ['Shoe', 'Purple']
+
+    results = TextUtils.cartesian_bigrams(tags)
+
+    for result in results:
+        inverse = [result[1], result[0]]
+        assert inverse not in results
+
+    assert TextUtils.cartesian_bigrams(tags) == [
+        ['Face', 'Head'],
+        ['Face', 'Shoe'],
+        ['Graduation', 'Face'],
+        ['Graduation', 'Head'],
+        ['Graduation', 'Laser'],
+        ['Graduation', 'Light'],
+        ['Graduation', 'Lighting'],
+        ['Graduation', 'People'],
+        ['Graduation', 'Person'],
+        ['Graduation', 'Purple'],
+        ['Graduation', 'Shoe'],
+        ['Head', 'Shoe'],
+        ['Laser', 'Face'],
+        ['Laser', 'Head'],
+        ['Laser', 'Light'],
+        ['Laser', 'Shoe'],
+        ['Light', 'Face'],
+        ['Light', 'Head'],
+        ['Light', 'Shoe'],
+        ['Lighting', 'Face'],
+        ['Lighting', 'Head'],
+        ['Lighting', 'Laser'],
+        ['Lighting', 'Light'],
+        ['Lighting', 'People'],
+        ['Lighting', 'Person'],
+        ['Lighting', 'Purple'],
+        ['Lighting', 'Shoe'],
+        ['People', 'Face'],
+        ['People', 'Head'],
+        ['People', 'Laser'],
+        ['People', 'Light'],
+        ['People', 'Person'],
+        ['People', 'Purple'],
+        ['People', 'Shoe'],
+        ['Person', 'Face'],
+        ['Person', 'Head'],
+        ['Person', 'Laser'],
+        ['Person', 'Light'],
+        ['Person', 'Purple'],
+        ['Person', 'Shoe'],
+        ['Purple', 'Face'],
+        ['Purple', 'Head'],
+        ['Purple', 'Laser'],
+        ['Purple', 'Light'],
+        ['Purple', 'Shoe']
     ]
 
 
+def test_cartesian_trigrams():
+    tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
+            'Laser', 'Shoe', 'Face', 'Head', 'Graduation']
+
+    results = TextUtils.cartesian_trigrams(tags)
+
+    for result in results:
+        print(result)
+
+
+def test_cartesian_quadgrams():
+    tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
+            'Laser', 'Shoe', 'Face', 'Head', 'Graduation']
+
+    results = TextUtils.cartesian_quadgrams(tags)
+
+    for result in results:
+        print(result)
+
+
 def main():
-    test_cartesian()
+    test_cartesian_quadgrams()
 
 
 if __name__ == '__main__':
