@@ -154,7 +154,7 @@ class TextUtils(object):
         return cartesian
 
     @staticmethod
-    def cartesian(matches: list) -> list:
+    def cartesian_join(matches: list) -> list:
         """
         Purpose:
             Perform a Cartesian Join

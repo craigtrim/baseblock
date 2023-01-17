@@ -293,13 +293,27 @@ def test_chunk_list():
 def test_cartesian():
     tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
             'Laser', 'Shoe', 'Face', 'Head', 'Graduation']
-    product = TextUtils.cartesian([tags, tags])
-
-    product = [x for x in product if x[0] != x[1]]
-    product = sorted(set([','.join(sorted(x)) for x in product]))
-    product = [x.split(',') for x in product]
-    
-    print(product)
+    assert TextUtils.cartesian_join(tags) == [
+        ['Face', 'Graduation'], ['Face', 'Head'], ['Face', 'Laser'],
+        ['Face', 'Light'], ['Face', 'Lighting'], ['Face', 'People'],
+        ['Face', 'Person'], ['Face', 'Purple'], ['Face', 'Shoe'],
+        ['Head', 'Face'], ['Head', 'Graduation'], ['Head', 'Laser'],
+        ['Head', 'Light'], ['Head', 'Lighting'], ['Head', 'People'],
+        ['Head', 'Person'], ['Head', 'Purple'], ['Head', 'Shoe'],
+        ['Laser', 'Graduation'], ['Laser', 'Light'], ['Laser', 'Lighting'],
+        ['Laser', 'People'], ['Laser', 'Person'], ['Laser', 'Purple'],
+        ['Light', 'Graduation'], ['Light', 'Laser'], ['Light', 'Lighting'],
+        ['Light', 'People'], ['Light', 'Person'], ['Light', 'Purple'],
+        ['Lighting', 'Graduation'], ['People', 'Graduation'],
+        ['People', 'Lighting'], ['People', 'Person'],
+        ['People', 'Purple'], ['Person', 'Graduation'],
+        ['Person', 'Lighting'], ['Person', 'People'], ['Person', 'Purple'],
+        ['Purple', 'Graduation'], ['Purple', 'Lighting'], ['Purple', 'People'],
+        ['Purple', 'Person'], ['Shoe', 'Face'], ['Shoe', 'Graduation'],
+        ['Shoe', 'Head'], ['Shoe', 'Laser'], ['Shoe', 'Light'],
+        ['Shoe', 'Lighting'], ['Shoe', 'People'],
+        ['Shoe', 'Person'], ['Shoe', 'Purple']
+    ]
 
 
 def main():
