@@ -306,6 +306,40 @@ class TextUtils(object):
         return product
 
     @staticmethod
+    def cartesian_5grams(matches: list) -> list:
+        """
+        Purpose:
+            Perform a Cartesian Join to create Bigram Products
+
+        :param matches:
+            a list of 1..* tokens forming a match pattern
+
+        Returns:
+            list: a list of trigrams
+        """
+
+        product = TextUtils.cartesian(
+            [matches, matches, matches, matches, matches])
+
+        product = [
+            x for x in product if x[0] != x[1] and x[0] != x[2] and
+            x[0] != x[3] and x[1] != x[2] and x[1] != x[3] and x[2] != x[3] and
+            x[2] != x[4] and x[3] != x[4] and x[1] != x[4] and x[0] != x[4]
+        ]
+
+        def sort_key(s): return (-len(s), s)
+
+        product = sorted(set(
+            [
+                ','.join(sorted(x, key=sort_key)) for x in product
+            ]
+        ))
+
+        product = [x.split(',') for x in product]
+
+        return product
+
+    @staticmethod
     def sliding_window(tokens: List[str],
                        window_size: int) -> Optional[List[str]]:
         """ Perform Sliding Window (e.g., n-gram) extraction over a list of tokens

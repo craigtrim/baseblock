@@ -1,6 +1,6 @@
 attrs @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/44/e7/a8/a68c7ec40f03187211e880c161885fa25a2295b065a8ff907978270fa1/attrs-22.2.0-py3-none-any.whl
 autopep8 @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/99/fa/8e/112982d07bedbc9f4184629dd998ac5b3cb0a01cdee98ded03128c72bc/autopep8-1.6.0-py2.py3-none-any.whl
-baseblock==0.2.11
+baseblock==0.2.12
 cffi @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/7d/26/a2/6695b21ce04407fbecceb61a88eaae991c2069deb1f071d3de97929651/cffi-1.15.1-cp38-cp38-win_amd64.whl
 cfgv @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/07/9a/ee/962c2dab45907e4fd1a13afc30753a15fe678f1dcf2c862a9794ed748b/cfgv-3.3.1-py2.py3-none-any.whl
 colorama @ file:///C:/Users/Craig/AppData/Local/pypoetry/Cache/artifacts/5d/f1/8c/c1c1952a392eb2dff9d3654deb2b438418fab27dd8d7b0e3845d63c93b/colorama-0.4.6-py2.py3-none-any.whl
