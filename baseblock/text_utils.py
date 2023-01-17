@@ -133,10 +133,11 @@ class TextUtils(object):
         return text_1
 
     @staticmethod
+    # TODO: 20230116; this seems like an unexpected usage of itertools.product(...)
     def cartesian(matches: list) -> list:
         """
         Purpose:
-            Find a list of candidate token sequences within the normalized_input_text
+            Perform a Cartesian Join
         Time per Call:
             0.5ms < x 1.0ms
         :param matches:
@@ -151,6 +152,87 @@ class TextUtils(object):
             cartesian.append(element)
 
         return cartesian
+
+    @staticmethod
+    def cartesian(matches: list) -> list:
+        """
+        Purpose:
+            Perform a Cartesian Join
+        Time per Call:
+            0.5ms < x 1.0ms
+        :param matches:
+            a list of 1..* tokens forming a match pattern
+            Sample Input:
+                [
+                    'Light', 
+                    'Lighting', 
+                    'Purple', 
+                    'People', 
+                    'Person',
+                    'Laser', 
+                    'Shoe', 
+                    'Face', 
+                    'Head', 
+                    'Graduation'
+                ]
+        :return:
+            a list of possible token sequences
+            Sample Output:
+                [
+                    ['Face', 'Graduation'], 
+                    ['Face', 'Head'], 
+                    ['Face', 'Laser'], 
+                    ['Face', 'Light'], 
+                    ['Face', 'Lighting'], 
+                    ['Face', 'People'], 
+                    ['Face', 'Person'], 
+                    ['Face', 'Purple'], 
+                    ['Face', 'Shoe'],
+                    ['Graduation', 'Head'], 
+                    ['Graduation', 'Laser'], 
+                    ['Graduation', 'Light'], 
+                    ['Graduation', 'Lighting'], 
+                    ['Graduation', 'People'], 
+                    ['Graduation', 'Person'], 
+                    ['Graduation', 'Purple'], 
+                    ['Graduation', 'Shoe'], 
+                    ['Head', 'Laser'], 
+                    ['Head', 'Light'], 
+                    ['Head', 'Lighting'], 
+                    ['Head', 'People'], 
+                    ['Head', 'Person'], 
+                    ['Head', 'Purple'], 
+                    ['Head', 'Shoe'], 
+                    ['Laser', 'Light'], 
+                    ['Laser', 'Lighting'], 
+                    ['Laser', 'People'], 
+                    ['Laser', 'Person'], 
+                    ['Laser', 'Purple'], 
+                    ['Laser', 'Shoe'], 
+                    ['Light', 'Lighting'], 
+                    ['Light', 'People'], 
+                    ['Light', 'Person'], 
+                    ['Light', 'Purple'], 
+                    ['Light', 'Shoe'], 
+                    ['Lighting', 'People'],
+                    ['Lighting', 'Person'],
+                    ['Lighting', 'Purple'], 
+                    ['Lighting', 'Shoe'], 
+                    ['People', 'Person'], 
+                    ['People', 'Purple'],
+                    ['People', 'Shoe'], 
+                    ['Person', 'Purple'],
+                    ['Person', 'Shoe'], 
+                    ['Purple', 'Shoe']
+                ]
+        """
+        product = TextUtils.cartesian([matches, matches])
+
+        product = [x for x in product if x[0] != x[1]]
+        product = sorted(set([','.join(sorted(x, key=len)) for x in product]))
+        product = [x.split(',') for x in product]
+
+        return product
 
     @staticmethod
     def sliding_window(tokens: List[str],

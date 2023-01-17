@@ -290,8 +290,20 @@ def test_chunk_list():
     ]
 
 
+def test_cartesian():
+    tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
+            'Laser', 'Shoe', 'Face', 'Head', 'Graduation']
+    product = TextUtils.cartesian([tags, tags])
+
+    product = [x for x in product if x[0] != x[1]]
+    product = sorted(set([','.join(sorted(x)) for x in product]))
+    product = [x.split(',') for x in product]
+    
+    print(product)
+
+
 def main():
-    test_chunk_list()
+    test_cartesian()
 
 
 if __name__ == '__main__':
