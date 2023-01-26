@@ -67,6 +67,9 @@ class TextUtils(object):
         running_total = 0
 
         # guard against null input
+        if not input_lines or not len(input_lines):
+            return None
+
         input_lines = [x for x in input_lines if x and len(x)]
 
         for i in range(len(input_lines)):
