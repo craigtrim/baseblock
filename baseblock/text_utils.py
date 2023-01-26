@@ -66,6 +66,9 @@ class TextUtils(object):
         buffer = []
         running_total = 0
 
+        # guard against null input
+        input_lines = [x for x in input_lines if x and len(x)]
+
         for i in range(len(input_lines)):
 
             buffer.append(input_lines[i])

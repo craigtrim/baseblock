@@ -289,6 +289,19 @@ def test_chunk_list():
         'input sentence 5'
     ]
 
+    results = TextUtils.chunk_list([
+        'Reinforcing the ETH narrative handled well given its on-chain, auditable properties.',
+        'Of course, DeFi comes with its own risks like smart contract exploits. This could put more scrutiny on how different decentralized applications are managing their protocol risks, given the recent proliferation of alternative layer-1 blockchains saturating the marketplace. Many in the crypto community have questioned the need for additional L1s.',
+        "Rules-based margining needs to account for the fact that volatility of certain digital assets can be between 50-200%, affecting their true liquidity. Ethereum's successful merge of consensus and execution layers has also strengthened the case for ambitious future upgrades, despite the trend towards core protocol ossification.",
+        'In our view, this supports the narrative for Ethereum as a leader in a multichain world. Nearly all networks are competing for the same pool of users and capital.',
+        "Some ecosystems are doing better than others, and we believe user and developer activity will aggregate to a smaller number of chains in 2023 compared to 2022. Ethereum's dominance could still be challenged in other ways, as the network relies on layer-2 scaling solutions to extend its blockspace, which have their own set of risks.",
+        'This includes centralized 50 sequencers, a lack of fraud proofs, and a lack of cross L2 interoperability, to name a few. Growth of a decentralized future The movement towards self-custody and decentralized finance (DeFi) protocols (i.e. decentralized exchanges or DEXs) will likely accelerate after the developments in 4Q22. Many industry players believe that the transgressions in the crypto space in 2022 were concentrated among CeFi (centralized finance) or CeDeFi (a combination of both CeFi and DeFi) entities, such as Celsius, Three Arrows Capital (3AC), and FTX.',
+    ], max_chunk_size=750)
+
+    for result in results:
+        print(result)
+        print('-'*50)
+
 
 def test_cartesian_bigrams():
     tags = ['Light', 'Lighting', 'Purple', 'People', 'Person',
@@ -370,7 +383,7 @@ def test_cartesian_quadgrams():
 
 
 def main():
-    test_cartesian_quadgrams()
+    test_chunk_list()
 
 
 if __name__ == '__main__':
