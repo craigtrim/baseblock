@@ -9,7 +9,7 @@ class TextMatcher(object):
     def exists(value: str,
                input_text: str,
                case_sensitive: bool = False) -> bool:
-        """ Check for the existence of a value in input text
+        """ Check if a Value exists within an Input Text
 
         Args:
             value (str): any value string
@@ -45,12 +45,34 @@ class TextMatcher(object):
         return False
 
     @staticmethod
+    def remove(input_text: str,
+               value: str,
+               case_sensitive: bool = False,
+               recursive: bool = False) -> bool:
+        """ Remove a Value from an Input Text
+
+        Args:
+            input_text (str): any text string to search in
+            value (str): the value that must exist in the input text
+            case_sensitive (bool): True if case sensitivity matters
+            recursive (bool): if True, then apply method recursively until all changes are made
+
+        Returns:
+            bool: True if the value exists in the input text
+        """
+        return TextMatcher.replace(input_text=input_text,
+                                   old_value=value,
+                                   new_value='',
+                                   case_sensitive=case_sensitive,
+                                   recursive=recursive)
+
+    @staticmethod
     def replace(input_text: str,
                 old_value: str,
                 new_value: str,
                 case_sensitive: bool = False,
                 recursive: bool = False) -> bool:
-        """ Check for the existence of a value in input text
+        """ Replace an old Value in an Input Text with a new Value
 
         Args:
             input_text (str): any text string to search in
