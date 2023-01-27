@@ -27,6 +27,9 @@ class TextMatcher(object):
         if value == input_text:
             return True
 
+        if value not in input_text:
+            return False
+
         match_lr = f' {value} '
         if match_lr in input_text:
             return True
@@ -66,6 +69,9 @@ class TextMatcher(object):
 
         if old_value == input_text:
             return new_value
+
+        if old_value not in input_text:
+            return False
 
         original_text = input_text
 
@@ -111,6 +117,9 @@ class TextMatcher(object):
 
         if value == input_text:
             return 0, len(value)
+
+        if value not in input_text:
+            return None, None
 
         match_lr = f' {value} '
         if match_lr in input_text:
