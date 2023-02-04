@@ -141,6 +141,13 @@ class FileIO(object):
             return file_name
 
         path = FileIO.join(FileIO.local_directory(), get_filename())
+
+        basename = os.path.basename(path)
+        if not os.path.exists(basename):
+            if print_output_path:
+                print(f'Created Output Path: {basename}')
+            FileIO.create_dir(basename)
+
         if _type == str:
             FileIO.write_string(data, path)
         else:
