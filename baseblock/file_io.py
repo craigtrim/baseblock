@@ -111,11 +111,17 @@ class FileIO(object):
         return os.path.normpath(os.path.join(os.getcwd(), *args))
 
     @staticmethod
-    def temp(data: object) -> str:
+    def temp(data: object,
+             file_name: Optional[str] = None,
+             raise_exception: bool = False,
+             print_output_path: bool = True) -> str:
         """ Write a Data Object to a Temp File
 
         Args:
             data (object): any data object
+            file_name (Optional[str]): an optional file name
+            raise_exception (bool): act as a program breakpoint.  Default is False.
+            print_output_path (bool): print output file path to console.  Default is True.
 
         Raises:
             NotImplementedError: unrecognized data type
@@ -129,13 +135,23 @@ class FileIO(object):
         if _type not in [dict, list, str]:
             raise NotImplementedError(_type)
 
-        path = FileIO.join(FileIO.local_directory(), 'temp.json')
+        def get_filename() -> str:
+            if not file_name or not len(file_name):
+                return 'temp.json'
+            return file_name
+
+        path = FileIO.join(FileIO.local_directory(), get_filename())
         if _type == str:
             FileIO.write_string(data, path)
         else:
             FileIO.write_json(data, path)
 
-        print(f'Wrote File to {path}')
+        if raise_exception:
+            raise Exception(f'FileIO Breakpoint: {path}')
+
+        if print_output_path:
+            print(f'Wrote File to {path}')
+
         return path
 
     @staticmethod

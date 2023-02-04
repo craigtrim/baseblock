@@ -93,7 +93,7 @@ class TextMatcher(object):
             return new_value
 
         if old_value not in input_text:
-            return False
+            return input_text
 
         original_text = input_text
 
