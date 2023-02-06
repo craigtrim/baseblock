@@ -3,6 +3,7 @@
 
 
 import os
+from datetime import datetime
 
 from io import StringIO
 from io import open as io_open
@@ -768,3 +769,28 @@ class FileIO(object):
 
         except JSONDecodeError:
             raise ValueError('Invalid JSON Data')
+
+    @staticmethod
+    def event(data: object,
+              local_directory_name: str,
+              file_name: str) -> None:
+        """ Persist an Event to a Local Directory
+
+        Args:
+            data (object): the JSON data (typically a list or dict)
+            local_directory_name (str): the relative path 
+            file_name (str): the output file name
+        """
+
+        local_directory_path = FileIO.local_directory_by_name(
+            local_directory_name)
+
+        ts = str(datetime.now().timestamp())
+
+        absolute_path = FileIO.join(
+            local_directory_path,
+            f'{file_name}-{ts}.json')
+
+        FileIO.temp(data,
+                    file_name=absolute_path,
+                    print_output_path=True)
