@@ -791,6 +791,6 @@ class FileIO(object):
             local_directory_path,
             f'{file_name}-{ts}.json')
 
-        FileIO.temp(data,
-                    file_name=absolute_path,
-                    print_output_path=True)
+        FileIO.write_json(data=data,
+                          file_path=absolute_path,
+                          debug=True)
