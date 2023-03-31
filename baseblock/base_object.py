@@ -2,6 +2,7 @@
 
 
 import logging
+from hashlib import md5
 
 
 # TODO: consider incorporating these comments - https://blog.guilatrova.dev/how-to-log-in-python-like-a-pro/
@@ -19,6 +20,11 @@ class BaseObject(object):
         Created:
             29-Sept-2021
             craigtrim@gmail.com
+        Updated:
+            31-Mar-2023
+            craigtrim@gmail.com
+            *   add hash function
+                https://github.com/craigtrim/baseblock/issues/5#issuecomment-1492393613
 
         Args:
             component_name (str): the name of the component to log for
@@ -39,3 +45,10 @@ class BaseObject(object):
     def uuid_generator() -> str:
         from uuid import uuid1
         return str(uuid1()).replace('-', '_')
+
+    @staticmethod
+    def md5hash(input: str) -> int:
+        if type(input) != str:
+            raise NotImplementedError(type(input))
+
+        return int(md5(input.encode('utf-8')).hexdigest(), 16)
