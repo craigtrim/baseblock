@@ -460,6 +460,21 @@ class Enforcer(object):
                                            expected_type='List[str]')
 
     @classmethod
+    def is_list_of_list_of_dicts(cls,
+                                 value: object) -> None:
+        """ This is a highly specialized data type checker
+
+        Args:
+            value (object): True if this is a list of dict elements
+        """
+
+        if type(value) != list:
+            raise DataTypeNotExpectedError(actual_value=value,
+                                           expected_type='List[List[Dict]]')
+
+        [Enforcer.is_list_of_dicts(x) for x in value]
+
+    @classmethod
     def is_list_of_tuples(cls,
                           value: object) -> None:
         """ This is a highly specialized data type checker
