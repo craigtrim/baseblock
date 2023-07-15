@@ -3,6 +3,7 @@
 
 
 import os
+import traceback
 from datetime import datetime
 
 from io import StringIO
@@ -31,8 +32,11 @@ from yaml import load as yaml_load
 class FileIO(object):
     """ File Input/Output Utility Methods """
 
+    
+
     @staticmethod
     def is_empty_folder(folder_name: str) -> bool:
+        
         """ Check if a Folder is Empty of Contents
 
         Args:
@@ -396,11 +400,22 @@ class FileIO(object):
         """
         FileIO.exists_or_error(file_path)
 
-        with open(file_path, 'r') as stream:
+        with open(file_path, 'r', encoding='utf-8') as stream:
             try:
-                return yaml_load(stream, Loader)
+
+                return yaml_load(stream, Loader=Loader)
+
             except YAMLError:
-                raise ValueError(f'Invalid YAML File: {file_path}')
+                traceback.format_exc()
+                raise ValueError('\n'.join([
+                    'Invalid File',
+                    '\t{0}'.format(file_path)]))
+
+            except UnicodeDecodeError:
+                print(traceback.format_exc())
+                raise ValueError('\n'.join([
+                    'Encoding Error',
+                    '\t{0}'.format(file_path)]))
 
     @staticmethod
     def read_lines(file_path: str,
