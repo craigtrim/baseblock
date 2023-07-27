@@ -11,7 +11,7 @@ description = "Base Block of Common Enterprise Python Utilities"
 license = "MIT"
 name = "baseblock"
 readme = "README.md"
-version = "0.2.24"
+version = "0.2.25"
 
 keywords = ["utility", "helper", "text", "matching"]
 repository = "https://github.com/craigtrim/climate-bot"
@@ -22,8 +22,8 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-PyYAML = "6.0" # 20221101; Last Verified
-cryptography = "38.0.1" # 20221101; Last Updated
+PyYAML = "6.0.1" # 20230725; Last Verified
+cryptography = "41.0.2" # 20230725; Last Updated
 python = "^3.8.5" 
 unicodedata2 = "*" 
 

@@ -1,28 +1,19 @@
-<#
-    .SYNOPSIS
-    Ecrypt Text
+#!/bin/bash
 
-    .DESCRIPTION
-    Encrypt any Input Text
+# Script Information
+#
+# Script Name: Run-Decrypt.sh
+# Description: Decrypt any Input Text
+# Usage: ./Run-Decrypt.sh <key>
 
-    .INPUTS
-    None. You cannot pipe objects to Add-Extension.
+# Input Text provided as command-line argument
+inputText="$1"
 
-    .OUTPUTS
-    Single txt File
+# Check if inputText is not provided
+if [ -z "$inputText" ]; then
+    echo "Error: Input text is missing. Usage: ./Run-Decrypt.sh <input_text>"
+    exit 1
+fi
 
-    .EXAMPLE
-    PS> .\scripts\Run-Decrypt.ps1 <key>
-#>
-
-param(
-    [Parameter(Mandatory = $True)] [System.String] $InputText
-)
-poetry run python .\baseblock\crypto_base.py "decrypt" $InputText
-
-
-## --------------------------------------------------------------------------------------------------------------------------------------------------------- ##
-## Purpose:         Encrypt Text
-## --------------------------------------------------------------------------------------------------------------------------------------------------------- ##
-## Sample Usage     .\scripts\Run-Decrypt.ps1 <key>
-## --------------------------------------------------------------------------------------------------------------------------------------------------------- ##
+# Execute the decryption using the 'crypto_base.py' script
+poetry run python ./baseblock/crypto_base.py "decrypt" "$inputText"

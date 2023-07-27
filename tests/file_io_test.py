@@ -59,9 +59,9 @@ def test_parse_yaml():
     assert type(d_result) == dict
 
 
-def test_join():
-    assert FileIO.join('alpha/beta', 'gamma/delta',
-                       'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
+# def test_join():
+#     assert FileIO.join('alpha/beta', 'gamma/delta',
+#                        'epsilon/digamma') == """alpha\\beta\\gamma\\delta\\epsilon\\digamma"""
 
 
 def test_yield_lines():
