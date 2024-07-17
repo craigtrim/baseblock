@@ -1,17 +1,13 @@
 [tool.poetry]
-authors = [
-  "Craig Trim <craigtrim@gmail.com>",
-]
+authors = ["Craig Trim <craigtrim@gmail.com>"]
 
-maintainers = [
-  "Craig Trim <craigtrim@gmail.com>",
-]
+maintainers = ["Craig Trim <craigtrim@gmail.com>"]
 
 description = "Base Block of Common Enterprise Python Utilities"
 license = "MIT"
 name = "baseblock"
 readme = "README.md"
-version = "0.2.25"
+version = "0.2.26"
 
 keywords = ["utility", "helper", "text", "matching"]
 repository = "https://github.com/craigtrim/climate-bot"
@@ -22,10 +18,10 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-PyYAML = "6.0.1" # 20230725; Last Verified
+PyYAML = ">=6.0"        # 20230725; Last Verified
 cryptography = "41.0.2" # 20230725; Last Updated
-python = "^3.8.5" 
-unicodedata2 = "*" 
+python = "^3.8.5"
+unicodedata2 = "*"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "*"
