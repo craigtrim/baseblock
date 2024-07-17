@@ -1,5 +1,5 @@
 autopep8==2.3.1
--e git+ssh://git@github.com/craigtrim/baseblock.git@08ce5107680eb50f32a868f0d434311fbd2396d7#egg=baseblock
+-e git+ssh://git@github.com/craigtrim/baseblock.git@63039a8b716011f82d0a47e8a71bd56383dd68b8#egg=baseblock
 cffi==1.16.0
 cfgv==3.4.0
 colorama==0.4.6

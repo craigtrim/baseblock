@@ -7,7 +7,7 @@ description = "Base Block of Common Enterprise Python Utilities"
 license = "MIT"
 name = "baseblock"
 readme = "README.md"
-version = "0.2.26"
+version = "0.2.30"
 
 keywords = ["utility", "helper", "text", "matching"]
 repository = "https://github.com/craigtrim/climate-bot"
